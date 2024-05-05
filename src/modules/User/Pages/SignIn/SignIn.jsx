@@ -11,7 +11,7 @@ const SignIn = () => {
                     <h1 className='text-3xl text-primary font-semibold'>Sign In</h1>
                     <div className='flex flex-col'>
                         <label htmlFor="username">UserName</label>
-                        <input id='username' className='border-2 border-gray-300 focus:border-primary' type="text" />
+                        <input id='username' className='border-2 bg-foreground border-gray-300 focus:border-primary' type="text" />
                     </div>
                     <div className='flex flex-col'>
                         <label htmlFor="password" >Password</label>
