@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
-import { Eye, EyeOff, LockKeyhole, MailIcon, User2 } from 'lucide-react';
+import { Eye, EyeOff, LockKeyhole, User2 } from 'lucide-react';
 import { CustomDialog, Button, Text } from '../../../../components';
 import axios from 'axios';
 import { Toaster, toast } from 'sonner';
@@ -77,7 +76,7 @@ const Signin = ({ register, setRegister }) => {
     }
   };
 
-  const verifyOtp = async (event) => {
+  const verifyOtp = async () => {
     const otp = document.getElementById('otp').value;
     const password = document.getElementById('newPassword').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
