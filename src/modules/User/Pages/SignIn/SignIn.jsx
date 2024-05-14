@@ -15,6 +15,9 @@ const Signin = ({ register, setRegister }) => {
   const [isMainModalOpen, setIsMainModalOpen] = useState(false);
   const [isOTPOpen, setIsOTPOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [otp, setOtp] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const { login } = useAuth();
 
   // signin
@@ -78,11 +81,7 @@ const Signin = ({ register, setRegister }) => {
   };
 
   const verifyOtp = async () => {
-    const otp = document.getElementById('otp').value;
-    const password = document.getElementById('newPassword').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
-
-    if (password == confirmPassword) {
+    if (newPassword == confirmPassword) {
       try {
         const email = sessionStorage.getItem('email');
 
@@ -91,7 +90,7 @@ const Signin = ({ register, setRegister }) => {
           {
             email: email,
             otp: otp,
-            password: password,
+            password: newPassword,
           }
         );
 
@@ -125,9 +124,7 @@ const Signin = ({ register, setRegister }) => {
               Sign In
             </Text>
             {/* email Start */}
-            <div className="relative flex flex-col mb-4">
-              <Input type="email" placeholder="Email" icon={User2} name="email" />
-            </div>
+            <Input name="email" type="email" placeholder="Email" icon={User2} />
             {/* email end */}
             {/* Password Start */}
             <div className="flex items-center mb-4 ">
@@ -195,9 +192,30 @@ const Signin = ({ register, setRegister }) => {
                   <Text variant="subtitleBold" className="mx-auto mb-2 text-primary">
                     Change Password
                   </Text>
-                  <Input id="otp" type="text" placeholder="Enter OTP" />
-                  <Input id="newPassword" type="password" placeholder="New Password" />
-                  <Input id="confirmPassword" type="password" placeholder="Confirm Password" />
+                  <Input
+                    id="otp"
+                    type="text"
+                    placeholder="Enter OTP"
+                    onChange={(event) => {
+                      setOtp(event.target.value);
+                    }}
+                  />
+                  <Input
+                    id="newPassword"
+                    type="password"
+                    placeholder="New Password"
+                    onChange={(event) => {
+                      setNewPassword(event.target.value);
+                    }}
+                  />
+                  <Input
+                    id="confirmPassword"
+                    type="password"
+                    placeholder="Confirm Password"
+                    onChange={(event) => {
+                      setConfirmPassword(event.target.value);
+                    }}
+                  />
                 </CustomDialog>
               </CustomDialog>
               {/* OTP Dialog */}
