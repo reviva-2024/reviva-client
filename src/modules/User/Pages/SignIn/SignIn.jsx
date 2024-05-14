@@ -125,7 +125,7 @@ const Signin = ({ register, setRegister }) => {
             </Text>
             {/* email Start */}
             <div className="flex flex-col mb-4 relative">
-              <Input type="email" placeholder="Email" icon={User2} />
+              <Input name="email" type="email" placeholder="Email" icon={User2} />
             </div>
             {/* email end */}
             {/* Password Start */}
