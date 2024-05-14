@@ -7,6 +7,7 @@ export const Button = React.forwardRef(
   (
     {
       className,
+      handleClick,
       variant = 'default',
       disabled = false,
       loading = false,
@@ -60,3 +61,4 @@ export const Button = React.forwardRef(
 );
 
 Button.displayName = 'Button';
+
