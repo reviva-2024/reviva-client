@@ -19,5 +19,11 @@ export default defineConfig({
         icon: true,
       },
     }),
+    
   ],
+  resolve: {
+    alias: {
+      '@': '/src', // This points to the src directory
+    },
+  },
 });
