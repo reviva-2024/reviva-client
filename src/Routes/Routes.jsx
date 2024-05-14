@@ -1,15 +1,22 @@
-import { createBrowserRouter } from "react-router-dom";
-import SignIn from "../modules/User/Pages/SignIn/SignIn";
+import { createBrowserRouter } from 'react-router-dom';
+import Auth from '../modules/User/Pages/Auth/Auth';
+import UpdateProfile from '../modules/User/Pages/UpdateProfile/UpdateProfile';
+import Sidebar from '../components/sidebar/sidebar';
 
 const routes = createBrowserRouter([
-    {
-        path: "/",
-        element: <h1>From Home</h1>
-    },
-    {
-        path: "/signIn",
-        element: <SignIn />
-    }
-])
+  {
+    path: '/',
+    element: <Auth />,
+  },
+  {
+    path: '/update',
+    element: <UpdateProfile />,
+  },
+  {
+    path: '/sidebar',
+    element: <Sidebar />,
+  },
+]);
 
 export default routes;
+
