@@ -5,6 +5,9 @@ import { CustomDialog, Button, Text } from '../../../../components';
 import axios from 'axios';
 import { Toaster, toast } from 'sonner';
 import { Input } from '../../../../components/input/input';
+import { useAuth } from '../../context/AuthContext';
+import { loginApi } from '../../api/userService';
+import { Style, logs } from '../../../../utils/logs';
 
 const Signin = ({ register, setRegister }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -15,39 +18,37 @@ const Signin = ({ register, setRegister }) => {
   const [otp, setOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const { login } = useAuth();
 
   // signin
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
 
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
     const rememberMe = form.rememberMe.checked;
 
-    setLoading(true);
-    try {
-      const response = await axios.post('http://localhost:5000/api/v0/user/login', {
-        email: email,
-        password: password,
-        rememberMe: rememberMe,
-      });
+    const data = { email, password, rememberMe };
 
-      if (response.data.success) {
-        if (!rememberMe) {
-          sessionStorage.setItem('token', response.data.token);
-        } else {
-          localStorage.setItem('token', response.data.token);
-        }
+    console.log('login data: ' + data);
 
-        toast.success(response.data.message);
-      } else {
-        toast.error(response.data.message);
-      }
-    } catch (error) {
-      toast.error(error.response.data.message);
-    } finally {
+    const res = await loginApi(data);
+    logs('handleSubmit: loginApi res', [res], Style.function);
+
+    if (res.status === 200) {
       setLoading(false);
+      login(res.data);
+      if (!rememberMe) {
+        sessionStorage.setItem('token', res.data.token);
+      } else {
+        localStorage.setItem('token', res.data.token);
+      }
+      toast.success(res.data.message);
+    } else {
+      setLoading(false);
+      return toast.error(res.data.message);
     }
   };
 
@@ -110,14 +111,14 @@ const Signin = ({ register, setRegister }) => {
   return (
     <section>
       <Toaster richColors toastOptions={{ className: 'z-50' }} />
-      <div className="flex w-screen flex-col justify-center items-center lg:flex-row lg:h-screen">
-        <div className="w-full lg:w-1/2 content-center">
-          <img src="https://i.ibb.co/8MMgCSv/REVIVA-LOGO.png" className="my-10 mx-auto" alt="" />
+      <div className="flex flex-col items-center justify-center w-screen lg:flex-row lg:h-screen">
+        <div className="content-center w-full lg:w-1/2">
+          <img src="https://i.ibb.co/8MMgCSv/REVIVA-LOGO.png" className="mx-auto my-10" alt="" />
         </div>
         <div className="w-full lg:w-1/2 flex flex-col justify-center items-center mb-12 lg:mb-0 rounded-s-[45px] lg:shadow-2xl h-full">
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col justify-center h-full mx-auto w-3/5"
+            className="flex flex-col justify-center w-3/5 h-full mx-auto"
           >
             <Text variant="h4" className="text-primary mb-9">
               Sign In
@@ -126,8 +127,8 @@ const Signin = ({ register, setRegister }) => {
             <Input name="email" type="email" placeholder="Email" icon={User2} />
             {/* email end */}
             {/* Password Start */}
-            <div className="flex mb-4  items-center ">
-              <div className="flex flex-col w-full relative">
+            <div className="flex items-center mb-4 ">
+              <div className="relative flex flex-col w-full">
                 <Input
                   name="password"
                   type={showPassword ? 'text' : 'password'}
@@ -149,13 +150,13 @@ const Signin = ({ register, setRegister }) => {
               </div>
             </div>
             {/* Password end */}
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex items-center justify-between mb-4">
               <div className="flex items-center">
                 <Input
                   id="rememberMe"
                   name="rememberMe"
                   type="checkbox"
-                  className="h-4 w-4 mr-2"
+                  className="w-4 h-4 mr-2"
                   checked={rememberMe}
                   onChange={() => {
                     setRememberMe(!rememberMe);
@@ -173,8 +174,8 @@ const Signin = ({ register, setRegister }) => {
                 triggerTextStyle={'text-red-500'}
                 isOpen={isMainModalOpen}
               >
-                <LockKeyhole className="text-primary mx-auto my-5" size={55} />
-                <Text variant="subtitleBold" className="text-primary mx-auto mb-2">
+                <LockKeyhole className="mx-auto my-5 text-primary" size={55} />
+                <Text variant="subtitleBold" className="mx-auto mb-2 text-primary">
                   Change Password
                 </Text>
 
@@ -188,7 +189,7 @@ const Signin = ({ register, setRegister }) => {
                   dialogCloseAction={verifyOtp}
                 >
                   {/* Content of OTP modal */}
-                  <Text variant="subtitleBold" className="text-primary mx-auto mb-2">
+                  <Text variant="subtitleBold" className="mx-auto mb-2 text-primary">
                     Change Password
                   </Text>
                   <Input
@@ -228,8 +229,8 @@ const Signin = ({ register, setRegister }) => {
             >
               Sign In
             </Button>
-            <div className="mx-auto text-primary mt-2">
-              Don't have an account?{' '}
+            <div className="mx-auto mt-2 text-primary">
+              Don&apos;t have an account?{' '}
               <Link
                 className="text-red-500"
                 onClick={() => {
@@ -247,4 +248,3 @@ const Signin = ({ register, setRegister }) => {
 };
 
 export default Signin;
-
