@@ -37,6 +37,7 @@ const Signup = ({ register, setRegister }) => {
         toast.error(res.data.message);
       }
     } else {
+      setLoading(false);
       toast.error('Passwords did not match');
     }
   };
