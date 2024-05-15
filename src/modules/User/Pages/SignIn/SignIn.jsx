@@ -110,7 +110,6 @@ const Signin = ({ register, setRegister }) => {
 
   return (
     <section>
-      <Toaster richColors toastOptions={{ className: 'z-50' }} />
       <div className="flex flex-col items-center justify-center w-screen lg:flex-row lg:h-screen">
         <div className="content-center w-full lg:w-1/2">
           <img src="https://i.ibb.co/8MMgCSv/REVIVA-LOGO.png" className="mx-auto my-10" alt="" />

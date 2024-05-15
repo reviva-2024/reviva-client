@@ -19,6 +19,7 @@ export const loginApi = async (data) => {
 
   return loginRes;
 };
+
 export const registrationApi = async (data) => {
   logs("API Call: registrationApi", [], Style.api);
   logs("Data: registrationApi", [data], Style.code);
