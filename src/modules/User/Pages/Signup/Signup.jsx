@@ -53,10 +53,9 @@ const Signup = ({ register, setRegister }) => {
             <Text variant="h4" className="text-primary mb-9">
               Sign Up
             </Text>
-            <div className="relative flex flex-col mb-4">
-              <label htmlFor="username" className="mb-1">
-                Username
-              </label>
+
+            <label htmlFor="username" className="relative flex flex-col mb-4">
+              Username
               <Input
                 name="username"
                 variant="default"
@@ -64,10 +63,10 @@ const Signup = ({ register, setRegister }) => {
                 placeholder="Username"
                 icon={User2}
               />
-            </div>
+            </label>
 
-            <div className="relative flex flex-col mb-4">
-              <label htmlFor="email">Email</label>
+            <label htmlFor="email" className="relative flex flex-col mb-4">
+              Email
               <Input
                 name="email"
                 variant="default"
@@ -75,10 +74,10 @@ const Signup = ({ register, setRegister }) => {
                 placeholder="Email"
                 icon={Mail}
               />
-            </div>
+            </label>
 
-            <div className="relative flex flex-col mb-4">
-              <label htmlFor="phoneNumber">Phone Number</label>
+            <label htmlFor="phoneNumber" className="relative flex flex-col mb-4">
+              Phone Number
               <Input
                 name="phoneNumber"
                 variant="default"
@@ -86,21 +85,19 @@ const Signup = ({ register, setRegister }) => {
                 placeholder="Phone Number"
                 icon={Phone}
               />
-            </div>
+            </label>
 
             <div className="flex items-center mb-4 ">
-              <div className="relative flex flex-col w-full">
-                <div>
-                  <label htmlFor="password">Password</label>
-                  <Input
-                    name="password"
-                    variant="default"
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="Password"
-                    icon={LockKeyhole}
-                  />
-                </div>
-              </div>
+              <label htmlFor="password" className="relative flex flex-col w-full">
+                Password
+                <Input
+                  name="password"
+                  variant="default"
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Password"
+                  icon={LockKeyhole}
+                />
+              </label>
 
               <div className="absolute right-16 md:right-36 lg:right-[830px] mt-6">
                 <button
@@ -116,8 +113,8 @@ const Signup = ({ register, setRegister }) => {
             </div>
 
             <div className="flex items-center mb-4 ">
-              <div className="relative flex flex-col w-full">
-                <label htmlFor="confirmPassword">Confirm Password</label>
+              <label htmlFor="confirmPassword" className="relative flex flex-col w-full">
+                Confirm Password
                 <Input
                   name="confirmPassword"
                   variant="default"
@@ -125,7 +122,7 @@ const Signup = ({ register, setRegister }) => {
                   placeholder="Confirm Password"
                   icon={LockKeyhole}
                 />
-              </div>
+              </label>
 
               <div className="absolute right-16 md:right-36 lg:right-[830px] mt-6">
                 <button
@@ -146,7 +143,7 @@ const Signup = ({ register, setRegister }) => {
             <div className="flex items-center justify-center mt-2 text-primary">
               Already have an account?{' '}
               <Link
-                className="text-red-500"
+                className="ml-2 font-bold text-red-500"
                 onClick={() => {
                   setRegister(!register);
                 }}
