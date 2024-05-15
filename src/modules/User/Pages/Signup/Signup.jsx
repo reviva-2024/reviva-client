@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Text } from '../../../../components';
 import { Toaster, toast } from 'sonner';
 import { Eye, EyeOff, LockKeyhole, Mail, Phone, User2 } from 'lucide-react';
@@ -11,6 +11,7 @@ const Signup = ({ register, setRegister }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  // const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -32,6 +33,8 @@ const Signup = ({ register, setRegister }) => {
       if (res.status === 200) {
         setLoading(false);
         toast.success(res.data.message);
+        // navigate('/auth');
+        setRegister(false);
       } else {
         setLoading(false);
         toast.error(res.data.message);
@@ -43,7 +46,7 @@ const Signup = ({ register, setRegister }) => {
 
   return (
     <section>
-      <Toaster richColors />
+      <Toaster richColors /> {/*  why this is not in main component? */}
       <div className="flex flex-col items-center justify-center w-screen lg:flex-row-reverse lg:h-screen">
         <div className="w-full lg:w-1/2 ">
           <img src="https://i.ibb.co/8MMgCSv/REVIVA-LOGO.png" className="mx-auto my-10" alt="" />
