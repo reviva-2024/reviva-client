@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Eye, EyeOff, LockKeyhole, User2 } from 'lucide-react';
+import { LockKeyhole, User2 } from 'lucide-react';
 import { CustomDialog, Button, Text } from '../../../../components';
 import axios from 'axios';
-import { Toaster, toast } from 'sonner';
 import { Input } from '../../../../components/input/input';
 import { useAuth } from '../../context/AuthContext';
 import { loginApi } from '../../api/userService';
 import { Style, logs } from '../../../../utils/logs';
+import { InputPassword } from '../../../../components/input/inputPassword';
+import { toast } from 'sonner';
 
 const Signin = ({ register, setRegister }) => {
-  const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [isMainModalOpen, setIsMainModalOpen] = useState(false);
   const [isOTPOpen, setIsOTPOpen] = useState(false);
@@ -122,32 +122,9 @@ const Signin = ({ register, setRegister }) => {
             <Text variant="h4" className="text-primary mb-9">
               Sign In
             </Text>
-            {/* email Start */}
-            <Input name="email" type="email" placeholder="Email" icon={User2} />
-            {/* email end */}
-            {/* Password Start */}
-            <div className="flex items-center mb-4 ">
-              <div className="relative flex flex-col w-full">
-                <Input
-                  name="password"
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder="Password"
-                  icon={LockKeyhole}
-                />
-              </div>
+            <Input name="email" type="email" placeholder="Email" icon={User2} label="Email" />
+            <InputPassword name="password" />
 
-              <div className="absolute right-16 md:right-28 ">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowPassword(!showPassword);
-                  }}
-                  className="flex items-center"
-                >
-                  {showPassword ? <EyeOff /> : <Eye />}
-                </button>
-              </div>
-            </div>
             {/* Password end */}
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center">

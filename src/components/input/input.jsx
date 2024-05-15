@@ -2,9 +2,10 @@ import * as React from 'react';
 import { cn } from '../../utils/cn';
 
 const Input = React.forwardRef(
-  ({ outerClassName, innerClassName, type, icon: Icon, ...props }, ref) => {
+  ({ outerClassName, innerClassName, label, type, icon: Icon, ...props }, ref) => {
     return (
-      <div className={cn(`flex items-center m-1 relative`, outerClassName)}>
+      <label className={cn(`flex flex-col gap-y-1 my-2 relative`, outerClassName)}>
+        {label && <span> {label}</span>}
         <input
           type={type}
           className={cn(
@@ -14,8 +15,10 @@ const Input = React.forwardRef(
           ref={ref}
           {...props}
         />
-        {Icon && <Icon className="absolute right-0 w-5 h-5 mr-2 " />}
-      </div>
+        {Icon && (
+          <Icon className={`absolute right-0 w-5 h-5 mr-2  ${label ? 'top-9' : 'top-[10px]'}`} />
+        )}
+      </label>
     );
   }
 );
