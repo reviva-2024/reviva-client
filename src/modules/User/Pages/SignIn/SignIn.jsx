@@ -5,7 +5,7 @@ import { CustomDialog, Button, Text } from '../../../../components';
 import axios from 'axios';
 import { Input } from '../../../../components/input/input';
 import { useAuth } from '../../context/AuthContext';
-import { loginApi } from '../../api/userService';
+import { loginApi, sendForgetEmailApi } from '../../api/userService';
 import { Style, logs } from '../../../../utils/logs';
 import { InputPassword } from '../../../../components/input/inputPassword';
 import { toast } from 'sonner';
@@ -62,18 +62,11 @@ const Signin = ({ register, setRegister }) => {
       sessionStorage.setItem('email', email);
       setIsMainModalOpen(false);
 
-      try {
-        const response = await axios.put('http://localhost:5000/api/v0/user/sendForgotEmail', {
-          email: email,
-        });
-
-        console.log(response.data);
-        if (response.data.success) {
-          // sessionStorage.setItem('token', response.data.token);
-          toast.success(response.data.message);
-        }
-      } catch (error) {
-        toast.error(error.response.data.message);
+      const res = await sendForgetEmailApi({ email });
+      if (res.status === 200) {
+        toast.success(res.data.message);
+      } else {
+        toast.error(res.data.message);
       }
     } else {
       console.error('Invalid email');

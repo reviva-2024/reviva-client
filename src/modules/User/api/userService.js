@@ -35,3 +35,19 @@ export const registrationApi = async (data) => {
 
   return registrationRes;
 };
+
+export const sendForgetEmailApi = async (data) => {
+  logs("API Call: sendForgotEmailApi", [], Style.api);
+  logs("Data: sendForgotEmailApi", [data], Style.code);
+
+  const [sendForgotEmailRes, sendForgotEmailErr] = await trycatch(noAuthURL().post("/user/sendForgotEmail", data));
+
+  if (sendForgotEmailErr) {
+    logs("Error: sendForgotEmailApi", [sendForgotEmailErr.response], Style.danger);
+    return sendForgotEmailErr.response;
+  }
+
+  logs("Success: sendForgotEmailApi", [sendForgotEmailRes], Style.success);
+
+  return sendForgotEmailRes;
+};
