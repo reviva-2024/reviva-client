@@ -62,6 +62,7 @@ const Signup = ({ register, setRegister }) => {
                 type="text"
                 placeholder="Username"
                 icon={User2}
+                required
               />
             </label>
 
@@ -70,9 +71,10 @@ const Signup = ({ register, setRegister }) => {
               <Input
                 name="email"
                 variant="default"
-                type={'email'}
+                type="email"
                 placeholder="Email"
                 icon={Mail}
+                required
               />
             </label>
 
@@ -81,9 +83,10 @@ const Signup = ({ register, setRegister }) => {
               <Input
                 name="phoneNumber"
                 variant="default"
-                type="text"
+                type="number"
                 placeholder="Phone Number"
                 icon={Phone}
+                required
               />
             </label>
 
@@ -96,6 +99,7 @@ const Signup = ({ register, setRegister }) => {
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Password"
                   icon={LockKeyhole}
+                  required
                 />
               </label>
 
@@ -121,6 +125,7 @@ const Signup = ({ register, setRegister }) => {
                   type={showConfirmPassword ? 'text' : 'password'}
                   placeholder="Confirm Password"
                   icon={LockKeyhole}
+                  required
                 />
               </label>
 
