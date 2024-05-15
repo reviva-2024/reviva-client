@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { LockKeyhole, User2 } from 'lucide-react';
 import { CustomDialog, Button, Text } from '../../../../components';
-import axios from 'axios';
 import { Input } from '../../../../components/input/input';
 import { useAuth } from '../../context/AuthContext';
 import { loginApi, sendForgetEmailApi, verifyOtpAndForgotPasswordApi } from '../../api/userService';
@@ -19,6 +18,7 @@ const Signin = ({ register, setRegister }) => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   // signin
   const handleSubmit = async (event) => {
@@ -39,7 +39,8 @@ const Signin = ({ register, setRegister }) => {
 
     if (res.status === 200) {
       setLoading(false);
-      login(res.data);
+      login(res.data, rememberMe);
+      navigate('/');
       if (!rememberMe) {
         sessionStorage.setItem('token', res.data.token);
       } else {
@@ -103,7 +104,7 @@ const Signin = ({ register, setRegister }) => {
         <div className="w-full lg:w-1/2 flex flex-col justify-center items-center mb-12 lg:mb-0 rounded-s-[45px] lg:shadow-2xl h-full">
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col justify-center w-3/5 h-full mx-auto"
+            className="flex flex-col justify-center w-4/5 h-full mx-auto lg:w-3/5"
           >
             <Text variant="h4" className="text-primary mb-9">
               Sign In
