@@ -16,7 +16,9 @@ const Input = React.forwardRef(
           {...props}
         />
         {Icon && (
-          <Icon className={`absolute right-0 w-5 h-5 mr-2  ${label ? 'top-9' : 'top-[10px]'}`} />
+          <Icon
+            className={`absolute right-0 w-[18px] h-5 mr-2  ${label ? 'top-9' : 'top-[10px]'}`}
+          />
         )}
       </label>
     );
