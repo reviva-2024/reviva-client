@@ -4,27 +4,33 @@ import { Style } from '../../../utils/logs';
 
 const AuthContext = createContext();
 
+const getUserData = () => {
+  const userLocal = localStorage.getItem('user');
+  const userSession = sessionStorage.getItem('user');
+  if (userLocal === null) {
+    return JSON.parse(userSession);
+  }
+  return JSON.parse(userLocal);
+};
+
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    const storedUser = sessionStorage.getItem('user');
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
-
-  useEffect(() => {
-    sessionStorage.setItem('user', JSON.stringify(user));
-  }, [user]);
-
-  const login = (data) => {
+  const login = (data, rememberMe) => {
     logs('AuthContext: login', [data], Style.code);
-    setUser(data);
+    if (rememberMe) {
+      localStorage.setItem('user', JSON.stringify(data));
+    } else {
+      sessionStorage.setItem('user', JSON.stringify(data));
+    }
   };
 
   const logout = () => {
     sessionStorage.removeItem('user');
-    setUser(null);
+    localStorage.removeItem('user');
   };
 
-  return <AuthContext.Provider value={{ user, login, logout }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ login, logout, getUserData }}>{children}</AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => {
