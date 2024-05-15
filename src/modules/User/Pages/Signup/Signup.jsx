@@ -37,7 +37,7 @@ const Signup = ({ register, setRegister }) => {
         toast.error(res.data.message);
       }
     } else {
-      toast.error('Password did not matched');
+      toast.error('Passwords did not match');
     }
   };
 
@@ -53,7 +53,6 @@ const Signup = ({ register, setRegister }) => {
             <Text variant="h4" className="text-primary mb-9">
               Sign Up
             </Text>
-            {/* Username Start */}
             <div className="relative flex flex-col mb-4">
               <label htmlFor="username" className="mb-1">
                 Username
@@ -66,8 +65,7 @@ const Signup = ({ register, setRegister }) => {
                 icon={User2}
               />
             </div>
-            {/* Username end */}
-            {/* Email Start */}
+
             <div className="relative flex flex-col mb-4">
               <label htmlFor="email">Email</label>
               <Input
@@ -78,8 +76,7 @@ const Signup = ({ register, setRegister }) => {
                 icon={Mail}
               />
             </div>
-            {/* Email end */}
-            {/* Phone Number Start */}
+
             <div className="relative flex flex-col mb-4">
               <label htmlFor="phoneNumber">Phone Number</label>
               <Input
@@ -90,8 +87,7 @@ const Signup = ({ register, setRegister }) => {
                 icon={Phone}
               />
             </div>
-            {/* Phone Number end */}
-            {/* Password Start */}
+
             <div className="flex items-center mb-4 ">
               <div className="relative flex flex-col w-full">
                 <div>
@@ -118,8 +114,7 @@ const Signup = ({ register, setRegister }) => {
                 </button>
               </div>
             </div>
-            {/* Password end */}
-            {/* Confirm Password Start */}
+
             <div className="flex items-center mb-4 ">
               <div className="relative flex flex-col w-full">
                 <label htmlFor="confirmPassword">Confirm Password</label>
