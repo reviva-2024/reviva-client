@@ -5,7 +5,7 @@ import { CustomDialog, Button, Text } from '../../../../components';
 import axios from 'axios';
 import { Input } from '../../../../components/input/input';
 import { useAuth } from '../../context/AuthContext';
-import { loginApi, sendForgetEmailApi } from '../../api/userService';
+import { loginApi, sendForgetEmailApi, verifyOtpAndForgotPasswordApi } from '../../api/userService';
 import { Style, logs } from '../../../../utils/logs';
 import { InputPassword } from '../../../../components/input/inputPassword';
 import { toast } from 'sonner';
@@ -74,26 +74,19 @@ const Signin = ({ register, setRegister }) => {
   };
 
   const verifyOtp = async () => {
-    if (newPassword == confirmPassword) {
-      try {
-        const email = sessionStorage.getItem('email');
+    if (newPassword === confirmPassword) {
+      const email = sessionStorage.getItem('email');
+      const res = await verifyOtpAndForgotPasswordApi({
+        email,
+        otp,
+        password: newPassword,
+      });
 
-        const response = await axios.put(
-          'http://localhost:5000/api/v0/user/verifyOtpAndForgotPassword',
-          {
-            email: email,
-            otp: otp,
-            password: newPassword,
-          }
-        );
-
-        console.log(response.data);
-        if (response.data.success) {
-          toast.success(response.data.message);
-        }
-      } catch (error) {
-        toast.error(error.response.data.message);
-      } finally {
+      if (res.status === 200) {
+        toast.success(res.data.message);
+        sessionStorage.removeItem('email');
+      } else {
+        toast.error(res.data.message);
         sessionStorage.removeItem('email');
       }
     } else {

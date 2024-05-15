@@ -40,7 +40,7 @@ export const sendForgetEmailApi = async (data) => {
   logs("API Call: sendForgotEmailApi", [], Style.api);
   logs("Data: sendForgotEmailApi", [data], Style.code);
 
-  const [sendForgotEmailRes, sendForgotEmailErr] = await trycatch(noAuthURL().post("/user/sendForgotEmail", data));
+  const [sendForgotEmailRes, sendForgotEmailErr] = await trycatch(noAuthURL().put("/user/sendForgotEmail", data));
 
   if (sendForgotEmailErr) {
     logs("Error: sendForgotEmailApi", [sendForgotEmailErr.response], Style.danger);
@@ -50,4 +50,21 @@ export const sendForgetEmailApi = async (data) => {
   logs("Success: sendForgotEmailApi", [sendForgotEmailRes], Style.success);
 
   return sendForgotEmailRes;
+};
+
+
+export const verifyOtpAndForgotPasswordApi = async (data) => {
+  logs("API Call: verifyOtpAndForgotPasswordApi", [], Style.api);
+  logs("Data: verifyOtpAndForgotPasswordApi", [data], Style.code);
+
+  const [verifyOtpAndForgotPasswordRes, verifyOtpAndForgotPasswordErr] = await trycatch(noAuthURL().put("/user/verifyOtpAndForgotPassword", data));
+
+  if (verifyOtpAndForgotPasswordErr) {
+    logs("Error: verifyOtpAndForgotPasswordApi", [verifyOtpAndForgotPasswordErr.response], Style.danger);
+    return verifyOtpAndForgotPasswordErr.response;
+  }
+
+  logs("Success: verifyOtpAndForgotPasswordApi", [verifyOtpAndForgotPasswordRes], Style.success);
+
+  return verifyOtpAndForgotPasswordRes;
 };
