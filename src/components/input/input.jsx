@@ -8,13 +8,13 @@ const Input = React.forwardRef(
         <input
           type={type}
           className={cn(
-            'flex h-10 w-full font-lato rounded-md border border-neutral-300 px-3 py-2 file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ',
+            'flex h-10 w-full font-lato rounded-md border border-neutral-300 px-3 py-2 file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pr-8',
             innerClassName
           )}
           ref={ref}
           {...props}
         />
-        {Icon && <Icon className="h-5 w-5 mr-2 absolute right-0 " />}
+        {Icon && <Icon className="absolute right-0 w-5 h-5 mr-2 " />}
       </div>
     );
   }
@@ -23,4 +23,3 @@ const Input = React.forwardRef(
 Input.displayName = 'Input';
 
 export { Input };
-
