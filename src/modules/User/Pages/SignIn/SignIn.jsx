@@ -122,8 +122,15 @@ const Signin = ({ register, setRegister }) => {
             <Text variant="h4" className="text-primary mb-9">
               Sign In
             </Text>
-            <Input name="email" type="email" placeholder="Email" icon={User2} label="Email" />
-            <InputPassword name="password" />
+            <Input
+              name="email"
+              type="email"
+              placeholder="Email"
+              icon={User2}
+              label="Email"
+              required
+            />
+            <InputPassword name="password" label="Password" placeholder="Password" required />
 
             {/* Password end */}
             <div className="flex items-center justify-between mb-4">
