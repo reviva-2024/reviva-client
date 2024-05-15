@@ -19,3 +19,18 @@ export const loginApi = async (data) => {
 
   return loginRes;
 };
+export const registrationApi = async (data) => {
+  logs("API Call: registrationApi", [], Style.api);
+  logs("Data: registrationApi", [data], Style.code);
+
+  const [registrationRes, registrationErr] = await trycatch(noAuthURL().post("/user/register", data));
+
+  if (registrationErr) {
+    logs("Error: registrationApi", [registrationErr.response], Style.danger);
+    return registrationErr.response;
+  }
+
+  logs("Success: registrationApi", [registrationRes], Style.success);
+
+  return registrationRes;
+};

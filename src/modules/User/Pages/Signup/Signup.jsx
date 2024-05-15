@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Await, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button, Text } from '../../../../components';
-import axios from 'axios';
 import { Toaster, toast } from 'sonner';
 import { Eye, EyeOff, LockKeyhole, Mail, Phone, User2 } from 'lucide-react';
 import { Input } from '../../../../components/input/input';
+import { registrationApi } from '../../api/userService';
+import { Style, logs } from '../../../../utils/logs';
 
 const Signup = ({ register, setRegister }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,6 +14,7 @@ const Signup = ({ register, setRegister }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
 
     const form = event.target;
     const username = form.username.value;
@@ -20,25 +22,19 @@ const Signup = ({ register, setRegister }) => {
     const phone = form.phoneNumber.value;
     const password = form.password.value;
     const confirmPassword = form.confirmPassword.value;
-    setLoading(true);
-    if (password == confirmPassword) {
-      try {
-        const response = await axios.post('http://localhost:5000/api/v0/user/register', {
-          username: username,
-          email: email,
-          phone: phone,
-          password: password,
-        });
 
-        if (response.data.success) {
-          toast.success(response.data.message);
-        } else {
-          toast.error(response.data.message);
-        }
-      } catch (error) {
-        toast.error(error.response.data.message);
-      } finally {
+    const data = { username, email, phone, password };
+
+    if (password === confirmPassword) {
+      const res = await registrationApi(data);
+      logs('handleSubmit: registrationApi res', [res], Style.function);
+
+      if (res.status === 200) {
         setLoading(false);
+        toast.success(res.data.message);
+      } else {
+        setLoading(false);
+        toast.error(res.data.message);
       }
     } else {
       toast.error('Password did not matched');
@@ -48,17 +44,17 @@ const Signup = ({ register, setRegister }) => {
   return (
     <section>
       <Toaster richColors />
-      <div className="flex w-screen flex-col justify-center items-center lg:flex-row-reverse lg:h-screen">
+      <div className="flex flex-col items-center justify-center w-screen lg:flex-row-reverse lg:h-screen">
         <div className="w-full lg:w-1/2 ">
-          <img src="https://i.ibb.co/8MMgCSv/REVIVA-LOGO.png" className="my-10 mx-auto" alt="" />
+          <img src="https://i.ibb.co/8MMgCSv/REVIVA-LOGO.png" className="mx-auto my-10" alt="" />
         </div>
         <div className="w-full lg:w-1/2 flex flex-col justify-center items-center mb-12 lg:mb-0 rounded-e-[45px] lg:shadow-2xl h-full">
-          <form onSubmit={handleSubmit} className="mx-auto w-3/5 ">
+          <form onSubmit={handleSubmit} className="w-3/5 mx-auto ">
             <Text variant="h4" className="text-primary mb-9">
               Sign Up
             </Text>
             {/* Username Start */}
-            <div className="flex flex-col mb-4 relative">
+            <div className="relative flex flex-col mb-4">
               <label htmlFor="username" className="mb-1">
                 Username
               </label>
@@ -72,7 +68,7 @@ const Signup = ({ register, setRegister }) => {
             </div>
             {/* Username end */}
             {/* Email Start */}
-            <div className="flex flex-col mb-4 relative">
+            <div className="relative flex flex-col mb-4">
               <label htmlFor="email">Email</label>
               <Input
                 name="email"
@@ -84,7 +80,7 @@ const Signup = ({ register, setRegister }) => {
             </div>
             {/* Email end */}
             {/* Phone Number Start */}
-            <div className="flex flex-col mb-4 relative">
+            <div className="relative flex flex-col mb-4">
               <label htmlFor="phoneNumber">Phone Number</label>
               <Input
                 name="phoneNumber"
@@ -96,8 +92,8 @@ const Signup = ({ register, setRegister }) => {
             </div>
             {/* Phone Number end */}
             {/* Password Start */}
-            <div className="flex mb-4  items-center ">
-              <div className="flex flex-col w-full relative">
+            <div className="flex items-center mb-4 ">
+              <div className="relative flex flex-col w-full">
                 <div>
                   <label htmlFor="password">Password</label>
                   <Input
@@ -124,8 +120,8 @@ const Signup = ({ register, setRegister }) => {
             </div>
             {/* Password end */}
             {/* Confirm Password Start */}
-            <div className="flex mb-4  items-center  ">
-              <div className="flex flex-col w-full relative">
+            <div className="flex items-center mb-4 ">
+              <div className="relative flex flex-col w-full">
                 <label htmlFor="confirmPassword">Confirm Password</label>
                 <Input
                   name="confirmPassword"
@@ -149,10 +145,10 @@ const Signup = ({ register, setRegister }) => {
               </div>
             </div>
 
-            <Button variant="default" className="p-2 mt-10 w-full" type="submit" loading={loading}>
+            <Button variant="default" className="w-full p-2 mt-10" type="submit" loading={loading}>
               Sign up
             </Button>
-            <div className="flex items-center justify-center text-primary mt-2">
+            <div className="flex items-center justify-center mt-2 text-primary">
               Already have an account?{' '}
               <Link
                 className="text-red-500"
@@ -171,4 +167,3 @@ const Signup = ({ register, setRegister }) => {
 };
 
 export default Signup;
-
