@@ -1,22 +1,35 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import Auth from '../modules/User/Pages/Auth/Auth';
 import UpdateProfile from '../modules/User/Pages/UpdateProfile/UpdateProfile';
-import Sidebar from '../components/sidebar/sidebar';
+import { useAuth } from '../modules/User/context/AuthContext';
 
-const routes = createBrowserRouter([
-  {
-    path: '/',
-    element: <Auth />,
-  },
-  {
-    path: '/update',
-    element: <UpdateProfile />,
-  },
-  {
-    path: '/sidebar',
-    element: <Sidebar />,
-  },
-]);
+const Routers = () => {
+  const { user } = useAuth();
 
-export default routes;
+  return (
+    <Routes>
+      <Route exact path="/auth" element={!user ? <Auth /> : <Navigate to={'/'} />} />
+      <Route
+        exact
+        path="/"
+        element={
+          user ? (
+            <div className="flex w-full gap-6">
+              {/* Copy this div and return it from Home.jsx */}
+              <aside className="h-screen px-24 py-6 bg-primary bg-opacity-20">
+                Sidebar{/* Add sidebar component here after creating the homepage*/}
+              </aside>
+              <Outlet />
+            </div>
+          ) : (
+            <Navigate to={'/auth'} />
+          )
+        }
+      >
+        <Route exact path="auth/update" element={<UpdateProfile />} />
+      </Route>
+    </Routes>
+  );
+};
 
+export default Routers;

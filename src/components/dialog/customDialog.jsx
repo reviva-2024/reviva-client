@@ -9,8 +9,6 @@ import {
   DialogTrigger,
   DialogClose,
 } from './dialog';
-import { Input } from '../../../components/ui/input';
-import { Label } from '../../../components/ui/label';
 
 export const CustomDialog = ({
   triggerText,
@@ -41,7 +39,7 @@ export const CustomDialog = ({
           {title && <DialogTitle>{title}</DialogTitle>}
           {description && (
             <DialogDescription>
-              Make changes to your profile here. Click save when you're done.
+              Make changes to your profile here. Click save when you&apos;re done.
             </DialogDescription>
           )}
         </DialogHeader>
@@ -55,4 +53,3 @@ export const CustomDialog = ({
     </Dialog>
   );
 };
-
