@@ -1,15 +1,21 @@
 import React from 'react';
 import { AuthProvider } from './modules/User/context/AuthContext';
-import { RouterProvider } from 'react-router-dom';
-import routes from './Routes/Routes';
+import { BrowserRouter } from 'react-router-dom';
+
 import { Toaster } from 'sonner';
+import Routers from './Routes/Routes';
 
 const App = () => {
   return (
-    <AuthProvider>
-      <Toaster richColors />
-      <RouterProvider router={routes}></RouterProvider>
-    </AuthProvider>
+    <>
+      <BrowserRouter>
+        <AuthProvider>
+          <Toaster richColors />
+
+          <Routers />
+        </AuthProvider>
+      </BrowserRouter>
+    </>
   );
 };
 
