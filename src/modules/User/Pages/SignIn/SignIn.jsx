@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Eye, EyeOff, LockKeyhole, User2 } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { LockKeyhole, User2 } from 'lucide-react';
 import { CustomDialog, Button, Text } from '../../../../components';
-import axios from 'axios';
-import { Toaster, toast } from 'sonner';
 import { Input } from '../../../../components/input/input';
 import { useAuth } from '../../context/AuthContext';
-import { loginApi } from '../../api/userService';
+import { loginApi, sendForgetEmailApi, verifyOtpAndForgotPasswordApi } from '../../api/userService';
 import { Style, logs } from '../../../../utils/logs';
+import { InputPassword } from '../../../../components/input/inputPassword';
+import { toast } from 'sonner';
 
 const Signin = ({ register, setRegister }) => {
-  const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [isMainModalOpen, setIsMainModalOpen] = useState(false);
   const [isOTPOpen, setIsOTPOpen] = useState(false);
@@ -19,6 +18,7 @@ const Signin = ({ register, setRegister }) => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   // signin
   const handleSubmit = async (event) => {
@@ -39,13 +39,9 @@ const Signin = ({ register, setRegister }) => {
 
     if (res.status === 200) {
       setLoading(false);
-      login(res.data);
-      if (!rememberMe) {
-        sessionStorage.setItem('token', res.data.token);
-      } else {
-        localStorage.setItem('token', res.data.token);
-      }
+      login(res.data, rememberMe);
       toast.success(res.data.message);
+      navigate('/');
     } else {
       setLoading(false);
       return toast.error(res.data.message);
@@ -62,18 +58,11 @@ const Signin = ({ register, setRegister }) => {
       sessionStorage.setItem('email', email);
       setIsMainModalOpen(false);
 
-      try {
-        const response = await axios.put('http://localhost:5000/api/v0/user/sendForgotEmail', {
-          email: email,
-        });
-
-        console.log(response.data);
-        if (response.data.success) {
-          // sessionStorage.setItem('token', response.data.token);
-          toast.success(response.data.message);
-        }
-      } catch (error) {
-        toast.error(error.response.data.message);
+      const res = await sendForgetEmailApi({ email });
+      if (res.status === 200) {
+        toast.success(res.data.message);
+      } else {
+        toast.error(res.data.message);
       }
     } else {
       console.error('Invalid email');
@@ -81,26 +70,19 @@ const Signin = ({ register, setRegister }) => {
   };
 
   const verifyOtp = async () => {
-    if (newPassword == confirmPassword) {
-      try {
-        const email = sessionStorage.getItem('email');
+    if (newPassword === confirmPassword) {
+      const email = sessionStorage.getItem('email');
+      const res = await verifyOtpAndForgotPasswordApi({
+        email,
+        otp,
+        password: newPassword,
+      });
 
-        const response = await axios.put(
-          'http://localhost:5000/api/v0/user/verifyOtpAndForgotPassword',
-          {
-            email: email,
-            otp: otp,
-            password: newPassword,
-          }
-        );
-
-        console.log(response.data);
-        if (response.data.success) {
-          toast.success(response.data.message);
-        }
-      } catch (error) {
-        toast.error(error.response.data.message);
-      } finally {
+      if (res.status === 200) {
+        toast.success(res.data.message);
+        sessionStorage.removeItem('email');
+      } else {
+        toast.error(res.data.message);
         sessionStorage.removeItem('email');
       }
     } else {
@@ -110,7 +92,6 @@ const Signin = ({ register, setRegister }) => {
 
   return (
     <section>
-      <Toaster richColors toastOptions={{ className: 'z-50' }} />
       <div className="flex flex-col items-center justify-center w-screen lg:flex-row lg:h-screen">
         <div className="content-center w-full lg:w-1/2">
           <img src="https://i.ibb.co/8MMgCSv/REVIVA-LOGO.png" className="mx-auto my-10" alt="" />
@@ -118,37 +99,21 @@ const Signin = ({ register, setRegister }) => {
         <div className="w-full lg:w-1/2 flex flex-col justify-center items-center mb-12 lg:mb-0 rounded-s-[45px] lg:shadow-2xl h-full">
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col justify-center w-3/5 h-full mx-auto"
+            className="flex flex-col justify-center w-4/5 h-full mx-auto lg:w-3/5"
           >
             <Text variant="h4" className="text-primary mb-9">
               Sign In
             </Text>
-            {/* email Start */}
-            <Input name="email" type="email" placeholder="Email" icon={User2} />
-            {/* email end */}
-            {/* Password Start */}
-            <div className="flex items-center mb-4 ">
-              <div className="relative flex flex-col w-full">
-                <Input
-                  name="password"
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder="Password"
-                  icon={LockKeyhole}
-                />
-              </div>
+            <Input
+              name="email"
+              type="email"
+              placeholder="Email"
+              icon={User2}
+              label="Email"
+              required
+            />
+            <InputPassword name="password" label="Password" placeholder="Password" required />
 
-              <div className="absolute right-16 md:right-28 ">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowPassword(!showPassword);
-                  }}
-                  className="flex items-center"
-                >
-                  {showPassword ? <EyeOff /> : <Eye />}
-                </button>
-              </div>
-            </div>
             {/* Password end */}
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center">
