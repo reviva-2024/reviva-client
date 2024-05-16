@@ -133,12 +133,12 @@ const Quiz = () => {
     return score;
   };
 
-  const handleShowResult = () => {
-    setShowResult(true);
-  };
+  //   const handleShowResult = () => {
+  //     setShowResult(true);
+  //   };
 
   return (
-    <div className="grid">
+    <div className="grid w-full gap-5 p-5">
       {questions.map(({ _id, question, options }, index) => (
         <Question
           key={_id}
@@ -149,7 +149,7 @@ const Quiz = () => {
           onOptionSelect={(option) => handleOptionSelect(index, option)}
         />
       ))}
-      <button onClick={handleShowResult}>Show Result</button>
+      <button onClick={() => setShowResult(!showResult)}>Show Result</button>
       {showResult && <p>Score: {calculateScore()}</p>}
     </div>
   );

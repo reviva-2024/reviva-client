@@ -7,7 +7,10 @@ const Question = ({ question, options, selectedOption, onOptionSelect, index }) 
 
   const renderOption = (option, id, groupName) => {
     return (
-      <label htmlFor={id}>
+      <label
+        htmlFor={id}
+        className={`px-4 w-full inline-block py-2 rounded-lg ${selectedOption === id ? 'bg-primary bg-opacity-80  font-semibold text-white ' : ''}`}
+      >
         <input
           type="radio"
           id={id}
@@ -22,12 +25,12 @@ const Question = ({ question, options, selectedOption, onOptionSelect, index }) 
   };
 
   return (
-    <div className="m-6">
-      <p className="mb-4">
+    <div className="w-full bg-[#FEF7E7] rounded-lg ">
+      <p className="px-4 py-2 mb-4 rounded-t-lg bg-secondary">
         <span className="mr-2">{index + 1}.</span>
         <span>{question}</span>
       </p>
-      <ul className="grid grid-cols-1 gap-y-1">
+      <ul className="grid grid-cols-1 px-4 pb-4 gap-y-3">
         {options.map((option, idx) => (
           <li key={`${option._id}-${idx}`}>
             {option.a && renderOption(option.a, `${option._id}`, `option-${option._id}`)}
