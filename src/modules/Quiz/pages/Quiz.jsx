@@ -141,33 +141,6 @@ const Quiz = () => {
     setShowResult(false);
   };
 
-  // return (
-  //   <div>
-  //     {!showResult ? (
-  //       <div>
-  //         <h1>Question {currentQuestionIndex + 1}</h1>
-  //         <h2>{questions[currentQuestionIndex].question}</h2>
-  //         <ul>
-  //           {questions[currentQuestionIndex].options.map((option, index) => (
-  //             <li key={index}>
-  //               <button onClick={() => handleOptionSelect(option.a)}>{option.option}</button>
-  //             </li>
-  //           ))}
-  //         </ul>
-  //         <button onClick={handleNextQuestion}>Next</button>
-  //       </div>
-  //     ) : (
-  //       <div>
-  //         <h1>Quiz Result</h1>
-  //         <p>
-  //           Your Score: {score} out of {questions.length}
-  //         </p>
-  //         <button onClick={restartQuiz}>Restart Quiz</button>
-  //       </div>
-  //     )}
-  //   </div>
-  // );
-
   return (
     <div className="grid">
       {questions.map(({ _id, question, options }, index) => (
