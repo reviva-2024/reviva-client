@@ -40,13 +40,8 @@ const Signin = ({ register, setRegister }) => {
     if (res.status === 200) {
       setLoading(false);
       login(res.data, rememberMe);
-      navigate('/');
-      if (!rememberMe) {
-        sessionStorage.setItem('token', res.data.token);
-      } else {
-        localStorage.setItem('token', res.data.token);
-      }
       toast.success(res.data.message);
+      navigate('/');
     } else {
       setLoading(false);
       return toast.error(res.data.message);
