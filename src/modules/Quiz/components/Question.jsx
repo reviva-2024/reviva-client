@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const Question = ({ question, options, index }) => {
-  const [selectedOption, setSelectedOption] = useState('');
-
+const Question = ({ question, options, selectedOption, onOptionSelect, index }) => {
   const handleOptionChange = (optionValue) => {
-    setSelectedOption(optionValue);
+    onOptionSelect(optionValue);
   };
 
   const renderOption = (option, id, groupName) => {
@@ -15,8 +13,8 @@ const Question = ({ question, options, index }) => {
           id={id}
           name={groupName}
           value={option}
-          checked={selectedOption === option}
-          onChange={() => handleOptionChange(option)}
+          checked={selectedOption === id}
+          onChange={() => handleOptionChange(id)}
         />
         <span className="ml-2">{option}</span>
       </label>
@@ -32,10 +30,10 @@ const Question = ({ question, options, index }) => {
       <ul className="grid grid-cols-1 gap-y-1">
         {options.map((option, idx) => (
           <li key={`${option._id}-${idx}`}>
-            {option.a && renderOption(option.a, `${option._id}-a`, `option-${option._id}`)}
-            {option.b && renderOption(option.b, `${option._id}-b`, `option-${option._id}`)}
-            {option.c && renderOption(option.c, `${option._id}-c`, `option-${option._id}`)}
-            {option.d && renderOption(option.d, `${option._id}-d`, `option-${option._id}`)}
+            {option.a && renderOption(option.a, `${option._id}`, `option-${option._id}`)}
+            {option.b && renderOption(option.b, `${option._id}`, `option-${option._id}`)}
+            {option.c && renderOption(option.c, `${option._id}`, `option-${option._id}`)}
+            {option.d && renderOption(option.d, `${option._id}`, `option-${option._id}`)}
           </li>
         ))}
       </ul>
