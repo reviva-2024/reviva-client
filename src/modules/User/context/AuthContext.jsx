@@ -4,18 +4,22 @@ import { Style } from '../../../utils/logs';
 
 const AuthContext = createContext();
 
-const getUserData = () => {
-  const userLocal = localStorage.getItem('user');
-  const userSession = sessionStorage.getItem('user');
-  if (userLocal === null) {
-    return JSON.parse(userSession);
-  }
-  return JSON.parse(userLocal);
-};
-
 export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem('user') || sessionStorage.getItem('user');
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user') || sessionStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
   const login = (data, rememberMe) => {
     logs('AuthContext: login', [data], Style.code);
+    setUser(data);
     if (rememberMe) {
       localStorage.setItem('user', JSON.stringify(data));
     } else {
@@ -26,11 +30,10 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     sessionStorage.removeItem('user');
     localStorage.removeItem('user');
+    setUser(null);
   };
 
-  return (
-    <AuthContext.Provider value={{ login, logout, getUserData }}>{children}</AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ login, logout, user }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {
