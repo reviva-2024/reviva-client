@@ -1,15 +1,20 @@
-import { ArrowLeft, LucideEdit2, Mail, Phone, User2 } from 'lucide-react';
+import { ArrowLeft, LockKeyhole, LucideEdit2, Mail, Pen, Phone, User2 } from 'lucide-react';
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Input } from '../../../../components/input/input';
-import { Button } from '../../../../components';
+import { Button, Text } from '../../../../components';
+import { InputPassword } from '../../../../components/input/inputPassword';
 
-const UpdateProfile = () => {
+const CurrentProfile = ({ user }) => {
+  const userInfo = user.data;
+
   const fileInputRef = useRef(null);
 
   const handleEditClick = () => {
     fileInputRef.current.click();
   };
+
+  //   console.log(user.data);
 
   const handleFileInputChange = (event) => {
     const file = event.target.files[0];
@@ -31,7 +36,7 @@ const UpdateProfile = () => {
         </Link>
       </div>
       {/* profile picture upload start */}
-      <div className="mt-28 mb-5 relative ">
+      <div className="mt-28 mb-5 relative">
         <img
           src={sessionStorage.getItem('profilePicture') || 'https://placehold.co/278x278'}
           alt="Profile Picture"
@@ -56,27 +61,39 @@ const UpdateProfile = () => {
       <div className="w-2/4 mb-12 lg:mb-0  h-full">
         <form
           // onSubmit={handleSubmit}
-          className="mx-auto w-full "
+          className="mx-auto w-full flex flex-col"
         >
-          <Input name="userName" type="text" icon={User2} placeholder="Username" label="Username" />
-          <Input name="Name" type="text" icon={User2} placeholder="Name" label="Name" />
-          <Input name="email" type="email" placeholder="Email" icon={Mail} label="Email" />
-          <Input
-            name="phoneNumber"
-            type="text"
-            icon={Phone}
-            placeholder="Phone Number"
-            label="Phone Number"
-          />
+          <Text className={'text-neutral-400'}>username</Text>
+          <div className="flex justify-between">
+            <Text variant="subtitleBold" className="mb-9">
+              {userInfo.username}
+            </Text>
+            <Text className="mb-9 flex items-center text-neutral-400">
+              Edit
+              <Pen size={12} className="ms-2" />
+            </Text>
+          </div>
+          <Text className={'text-neutral-400'}>email</Text>
+          <Text variant="subtitleBold" className="mb-9">
+            {userInfo.email}
+          </Text>
 
-          <Button variant="default" className="w-full my-12" type="submit">
-            Update Profile
-          </Button>
+          <Text className={'text-neutral-400'}>phone</Text>
+          <Text variant="subtitleBold" className="mb-9">
+            {userInfo.phone}
+          </Text>
+          <div className="flex justify-between">
+            <InputPassword label={'Password'} outerClassName={'text-neutral-400'} />
+            <Text className="mb-9 flex items-center text-neutral-400">
+              Edit
+              <Pen size={12} className="ms-2" />
+            </Text>
+          </div>
         </form>
       </div>
     </section>
   );
 };
 
-export default UpdateProfile;
+export default CurrentProfile;
 
