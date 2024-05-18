@@ -176,7 +176,7 @@ const Quiz = () => {
   const navigate = useNavigate();
   // const { user } = useAuth();
 
-  const questionsPerPage = 3;
+  const questionsPerPage = 5;
 
   const handleOptionSelect = (index, option) => {
     const newSelectedOptions = [...selectedOptions];
