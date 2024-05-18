@@ -26,11 +26,11 @@ const Question = ({ question, options, selectedOption, onOptionSelect, index }) 
 
   return (
     <div className="w-full bg-[#FEF7E7] rounded-lg ">
-      <p className="px-4 py-2 mb-4 font-semibold rounded-t-lg bg-secondary">
+      <p className="px-4 py-3 font-semibold rounded-t-lg bg-secondary">
         <span className="mr-1">{index + 1}.</span>
         <span>{question}</span>
       </p>
-      <ul className="grid grid-cols-1 px-4 pb-4 gap-y-3">
+      <ul className="grid grid-cols-1 px-4 my-4 gap-y-3">
         {options.map((option, idx) => (
           <li key={`${option._id}-${idx}`}>
             {option.a && renderOption(option.a, `${option._id}`, `option-${option._id}`)}
