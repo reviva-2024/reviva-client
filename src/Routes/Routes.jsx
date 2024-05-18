@@ -1,7 +1,9 @@
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import Auth from '../modules/User/Pages/Auth/Auth';
 import UpdateProfile from '../modules/User/Pages/UpdateProfile/UpdateProfile';
+
 import { useAuth } from '../modules/User/context/AuthContext';
+import CurrentProfile from '../modules/User/Pages/UpdateProfile/CurrentProfile';
 
 const Routers = () => {
   const { user } = useAuth();
@@ -16,9 +18,6 @@ const Routers = () => {
           user ? (
             <div className="flex w-full gap-6">
               {/* Copy this div and return it from Home.jsx */}
-              <aside className="h-screen px-24 py-6 bg-primary bg-opacity-20">
-                Sidebar{/* Add sidebar component here after creating the homepage*/}
-              </aside>
               <Outlet />
             </div>
           ) : (
@@ -27,9 +26,11 @@ const Routers = () => {
         }
       >
         <Route exact path="auth/update" element={<UpdateProfile />} />
+        <Route exact path="auth/profile" element={<CurrentProfile user={user} />} />
       </Route>
     </Routes>
   );
 };
 
 export default Routers;
+
