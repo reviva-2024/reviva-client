@@ -5,6 +5,7 @@ import { useAuth } from '../modules/User/context/AuthContext';
 import Quiz from '../modules/Quiz/pages/Quiz';
 import Home from '../pages/Home';
 import HomeMain from '../pages/Home/HomeMain';
+import QuizResult from '../modules/Quiz/pages/QuizResult';
 
 const Routers = () => {
   const { user } = useAuth();
@@ -16,6 +17,7 @@ const Routers = () => {
         <Route exact path="/" element={<HomeMain />} />
         <Route exact path="auth/update" element={<UpdateProfile />} />
         <Route exact path="quiz" element={<Quiz />} />
+        <Route exact path="quiz-result" element={<QuizResult />} />
       </Route>
     </Routes>
   );

@@ -5,13 +5,38 @@ import { toast } from 'sonner';
 import { useAuth } from '../../User/context/AuthContext';
 import { Style, logs } from '../../../utils/logs';
 import QuestionSkeleton from '../components/QuestionSkeleton';
+import { Button } from '../../../components/buttons/button';
+import { useNavigate } from 'react-router-dom';
 
 const Quiz = () => {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedOptions, setSelectedOptions] = useState(new Array(questions.length).fill(''));
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
   const [showResult, setShowResult] = useState(false);
+  const navigate = useNavigate();
   const { user } = useAuth();
+
+  const questionsPerPage = 5;
+
+  useEffect(() => {
+    setLoading(true);
+
+    const getAllPurchaseReport = async () => {
+      const response = await getAllQuizesApi(user.token);
+      logs('getAllQuizes useEffect:', [response], Style.effects);
+
+      if (response.data.success) {
+        setQuestions(response.data.data);
+        setSelectedOptions(new Array(response.data.data.length).fill(''));
+        setLoading(false);
+      } else {
+        setLoading(false);
+        toast.error(response.data.message);
+      }
+    };
+    getAllPurchaseReport();
+  }, [user.token]);
 
   const handleOptionSelect = (index, option) => {
     const newSelectedOptions = [...selectedOptions];
@@ -31,40 +56,48 @@ const Quiz = () => {
     return score;
   };
 
-  useEffect(() => {
-    setLoading(true);
+  const handleNextPage = () => {
+    if (currentPage === Math.ceil(questions.length / questionsPerPage) - 1) {
+      navigate('/quiz-result', { state: { score: calculateScore() } });
+    } else {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
-    const getAllPurchaseReport = async () => {
-      const response = await getAllQuizesApi(user.token);
-      logs('getAllQuizes useEffect:', [response], Style.effects);
+  const isCurrentPageAnswered = () => {
+    const start = currentPage * questionsPerPage;
+    const end = start + questionsPerPage;
+    return selectedOptions.slice(start, end).every((option) => option !== '');
+  };
 
-      if (response.data.success) {
-        setQuestions(response.data.data);
-        setLoading(false);
-      } else {
-        setLoading(false);
-        toast.error(response.data.message);
-      }
-    };
-    getAllPurchaseReport();
-  }, []);
+  const startIndex = currentPage * questionsPerPage;
+  const endIndex = startIndex + questionsPerPage;
+  const currentQuestions = questions.slice(startIndex, endIndex);
 
   return (
     <div className="grid w-full max-h-screen gap-5 p-5 overflow-y-auto">
       {loading
-        ? Array.from({ length: 4 }).map((_, idx) => <QuestionSkeleton key={idx} />)
-        : questions.map(({ _id, question, options }, index) => (
+        ? Array.from({ length: 5 }).map((_, idx) => <QuestionSkeleton key={idx} />)
+        : currentQuestions.map(({ _id, question, options }, index) => (
             <Question
               key={_id}
               question={question}
               options={options}
-              index={index}
-              selectedOption={selectedOptions[index]}
-              onOptionSelect={(option) => handleOptionSelect(index, option)}
+              index={startIndex + index}
+              selectedOption={selectedOptions[startIndex + index]}
+              onOptionSelect={(option) => handleOptionSelect(startIndex + index, option)}
             />
           ))}
-      <button onClick={() => setShowResult(!showResult)}>Show Result</button>
-      {showResult && <p>Score: {calculateScore()}</p>}
+
+      <div className="text-right">
+        <Button
+          onClick={handleNextPage}
+          disabled={!isCurrentPageAnswered()}
+          className="w-full max-w-36"
+        >
+          {currentPage === Math.ceil(questions.length / questionsPerPage) - 1 ? 'Submit' : 'Next'}
+        </Button>
+      </div>
     </div>
   );
 };
