@@ -9,7 +9,7 @@ const Question = ({ question, options, selectedOption, onOptionSelect, index }) 
     return (
       <label
         htmlFor={id}
-        className={`px-2 w-full inline-block py-2 rounded-lg ${selectedOption === id ? 'bg-primary bg-opacity-80  font-semibold text-white ' : ''}`}
+        className={`flex items-center px-2 w-full  py-2 rounded-lg transition-all duration-200 cursor-pointer ${selectedOption === id ? 'bg-primary bg-opacity-80  font-semibold text-white ' : 'hover:text-white hover:bg-primary  '}`}
       >
         <input
           type="radio"
@@ -31,9 +31,9 @@ const Question = ({ question, options, selectedOption, onOptionSelect, index }) 
         <span>{question}</span>
       </p>
       <div className="grid grid-cols-1 px-4 my-4 gap-y-3">
-        {options.map((option, idx) => (
-          <div key={`${option._id}-${idx}`}>
-            {renderOption(option.option, `${option._id}`, `option-${option._id}`)}
+        {options.map((option) => (
+          <div key={option._id}>
+            {renderOption(option.option, option._id, `option-${option._id}`)}
           </div>
         ))}
       </div>
