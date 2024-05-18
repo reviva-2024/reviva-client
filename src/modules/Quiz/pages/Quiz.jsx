@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Question from '../components/Question';
 import { getAllQuizesApi } from '../api/quizApi';
 import { toast } from 'sonner';
@@ -170,13 +170,13 @@ const questions = [
 
 const Quiz = () => {
   // const [questions, setQuestions] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [selectedOptions, setSelectedOptions] = useState(new Array(questions.length).fill(''));
   const [currentPage, setCurrentPage] = useState(0);
   const navigate = useNavigate();
   // const { user } = useAuth();
 
-  const questionsPerPage = 5;
+  const questionsPerPage = 3;
 
   const handleOptionSelect = (index, option) => {
     const newSelectedOptions = [...selectedOptions];
@@ -216,6 +216,31 @@ const Quiz = () => {
   const isCurrentPageAnswered = () => {
     return selectedOptions.slice(startIndex, endIndex).every((option) => option !== '');
   };
+
+  // Load state from local storage on component mount
+  useEffect(() => {
+    setLoading(true);
+    const storedSelectedOptions = localStorage.getItem('selectedOptions');
+    const storedCurrentPage = localStorage.getItem('currentPage');
+
+    if (storedSelectedOptions && storedCurrentPage) {
+      console.log('storedSelectedOptions', storedSelectedOptions);
+      console.log('storedCurrentPage', storedCurrentPage);
+      setSelectedOptions(JSON.parse(storedSelectedOptions));
+      setCurrentPage(parseInt(storedCurrentPage));
+      setLoading(false);
+    }
+    setLoading(false);
+  }, []);
+
+  // Update local storage when selected options or current page change
+  useEffect(() => {
+    // To prevent resetting values on first render.
+    if (!loading) {
+      localStorage.setItem('selectedOptions', JSON.stringify(selectedOptions));
+      localStorage.setItem('currentPage', currentPage.toString());
+    }
+  }, [selectedOptions, currentPage]);
 
   // useEffect(() => {
   //   setLoading(true);
