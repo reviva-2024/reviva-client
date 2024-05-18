@@ -11,7 +11,7 @@ export default function Sidebar() {
 
   return (
     <aside
-      className={`fixed top-0 bottom-0 ${expanded ? 'w-72' : 'w-20'} bg-white rounded-xl shadow-xl z-50`}
+      className={`h-screen overflow-y-scroll ${expanded ? 'w-72' : 'w-20'} bg-white rounded-xl shadow-xl z-50`}
     >
       <div className="p-4 pb-2 flex justify-end">
         <button
