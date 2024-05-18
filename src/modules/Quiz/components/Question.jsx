@@ -33,10 +33,7 @@ const Question = ({ question, options, selectedOption, onOptionSelect, index }) 
       <div className="grid grid-cols-1 px-4 my-4 gap-y-3">
         {options.map((option, idx) => (
           <div key={`${option._id}-${idx}`}>
-            {option.a && renderOption(option.a, `${option._id}`, `option-${option._id}`)}
-            {option.b && renderOption(option.b, `${option._id}`, `option-${option._id}`)}
-            {option.c && renderOption(option.c, `${option._id}`, `option-${option._id}`)}
-            {option.d && renderOption(option.d, `${option._id}`, `option-${option._id}`)}
+            {renderOption(option.option, `${option._id}`, `option-${option._id}`)}
           </div>
         ))}
       </div>
