@@ -171,10 +171,10 @@ const questions = [
 const Quiz = () => {
   // const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [selectedOptions, setSelectedOptions] = useState(new Array(questions.length).fill(''));
   const [currentPage, setCurrentPage] = useState(0);
   const navigate = useNavigate();
-  const { user } = useAuth();
+  // const { user } = useAuth();
 
   const questionsPerPage = 5;
 
@@ -210,15 +210,12 @@ const Quiz = () => {
     }
   };
 
-  const isCurrentPageAnswered = () => {
-    const start = currentPage * questionsPerPage;
-    const end = start + questionsPerPage;
-    return selectedOptions.slice(start, end).every((option) => option !== '');
-  };
-
   const startIndex = currentPage * questionsPerPage;
   const endIndex = startIndex + questionsPerPage;
   const currentQuestions = questions.slice(startIndex, endIndex);
+  const isCurrentPageAnswered = () => {
+    return selectedOptions.slice(startIndex, endIndex).every((option) => option !== '');
+  };
 
   // useEffect(() => {
   //   setLoading(true);
