@@ -205,6 +205,9 @@ const Quiz = () => {
           selectedOptions: selectedOptions,
         },
       });
+
+      localStorage.removeItem('selectedOptions');
+      localStorage.removeItem('currentPage');
     } else {
       setCurrentPage((prev) => prev + 1);
     }
