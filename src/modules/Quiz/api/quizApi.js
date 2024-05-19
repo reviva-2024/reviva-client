@@ -17,3 +17,20 @@ export const getAllQuizesApi = async (token) => {
 
   return getAllQuizesRes;
 };
+
+
+export const updateQuizeMarkApi = async (token) => {
+    
+  logs("API Call: updateQuizeMarkApi", [], Style.api);
+
+  const [updateQuizeMarkRes, updateQuizeMarkErr] = await trycatch(authURL(token).put("/user/updateQuizMark"));
+
+  if (updateQuizeMarkErr) {
+    logs("Error: updateQuizeMarkApi", [updateQuizeMarkErr.response], Style.danger);
+    return updateQuizeMarkErr.response;
+  }
+
+  logs("Success: updateQuizeMarkApi", [updateQuizeMarkRes], Style.success);
+
+  return updateQuizeMarkRes;
+};

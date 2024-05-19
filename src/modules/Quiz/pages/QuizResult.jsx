@@ -19,7 +19,7 @@ const QuizResult = () => {
         Medium employability. Need to focus on gaining and honing skills.
       </span>
     );
-  } else if (score >= 0 && score <= 40) {
+  } else if (score >= 20 && score <= 40) {
     employabilityMessage = (
       <span className="text-red-500">
         Below average. Focus on your career. Gain related skills.
