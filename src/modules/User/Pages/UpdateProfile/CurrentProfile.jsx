@@ -1,9 +1,10 @@
-import { ArrowLeft, LockKeyhole, LucideEdit2, Mail, Pen, Phone, User2 } from 'lucide-react';
+import { ArrowLeft, LucideEdit2, Pen } from 'lucide-react';
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Input } from '../../../../components/input/input';
-import { Button, Text } from '../../../../components';
+
 import { InputPassword } from '../../../../components/input/inputPassword';
+import { Text } from '../../../../components';
 
 const CurrentProfile = ({ user }) => {
   const userInfo = user.data;
@@ -69,7 +70,7 @@ const CurrentProfile = ({ user }) => {
               {userInfo.username}
             </Text>
             <Text className="mb-9 flex items-center text-neutral-400">
-              Edit
+              <Link to={'/auth/update'}>Edit</Link>
               <Pen size={12} className="ms-2" />
             </Text>
           </div>
@@ -82,7 +83,7 @@ const CurrentProfile = ({ user }) => {
           <Text variant="subtitleBold" className="mb-9">
             {userInfo.phone}
           </Text>
-          <div className="flex justify-between">
+          <div className="flex">
             <InputPassword label={'Password'} outerClassName={'text-neutral-400'} />
             <Text className="mb-9 flex items-center text-neutral-400">
               Edit

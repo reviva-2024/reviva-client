@@ -25,7 +25,7 @@ const Routers = () => {
           )
         }
       >
-        <Route exact path="auth/update" element={<UpdateProfile />} />
+        <Route exact path="auth/update" element={<UpdateProfile user={user} />} />
         <Route exact path="auth/profile" element={<CurrentProfile user={user} />} />
       </Route>
     </Routes>
