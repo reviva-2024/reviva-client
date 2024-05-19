@@ -3,30 +3,32 @@ import { Settings, User2, Brain, ListVideo, HelpCircle, LucideLogOut } from 'luc
 export const firstUlItems = [
   {
     icon: <User2 size={22} />,
-    text: 'Profile',
+    name: 'Profile',
+    route: '/auth/profile',
   },
   {
     icon: <Brain size={22} />,
-    text: 'Quiz',
+    name: 'Quiz',
+    route: '/quiz',
   },
   {
     icon: <ListVideo size={22} />,
-    text: 'Profile',
+    name: 'Courses',
   },
 ];
 
 export const secondUlItems = [
-  {
-    icon: <HelpCircle size={22} />,
-    text: 'Help',
-  },
-  {
-    icon: <Settings size={22} />,
-    text: 'Settings',
-  },
+  // {
+  //   icon: <HelpCircle size={22} />,
+  //   name: 'Help',
+  // },
+  // {
+  //   icon: <Settings size={22} />,
+  //   name: 'Settings',
+  // },
   {
     icon: <LucideLogOut size={22} />,
-    text: 'Log out',
+    name: 'Log out',
   },
 ];
 
