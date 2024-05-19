@@ -12,7 +12,7 @@ export default function Sidebar() {
 
   return (
     <aside
-      className={`h-screen fixed z-50 overflow-y-hidden ${expanded ? 'w-72' : 'w-20'} bg-white rounded-xl shadow-xl z-50`}
+      className={`h-screen fixed z-40 overflow-y-hidden ${expanded ? 'w-72' : 'w-20'} bg-white rounded-xl shadow-xl z-50`}
     >
       <div className="p-4 pb-2 flex justify-end">
         <button
