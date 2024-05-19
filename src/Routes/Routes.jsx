@@ -17,8 +17,8 @@ const Routers = () => {
       <Route exact path="/auth" element={!user ? <Auth /> : <Navigate to={'/'} />} />
       <Route exact path="/" element={user ? <Home /> : <Navigate to={'/auth'} />}>
         <Route exact path="/" element={<HomeMain />} />
-        <Route exact path="auth/update" element={<UpdateProfile user={user} />} />
-        <Route exact path="auth/profile" element={<CurrentProfile user={user} />} />
+        <Route exact path="auth/update" element={<UpdateProfile />} />
+        <Route exact path="auth/profile" element={<CurrentProfile />} />
         <Route exact path="quiz" element={<Quiz />} />
         <Route exact path="quiz-result" element={<QuizResult />} />
       </Route>

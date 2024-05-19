@@ -32,7 +32,7 @@ const Signin = ({ register, setRegister }) => {
 
     const data = { email, password, rememberMe };
 
-    console.log('login data: ' + data);
+    // console.log('login data: ' + data);
 
     const res = await loginApi(data);
     logs('handleSubmit: loginApi res', [res], Style.function);
@@ -213,3 +213,4 @@ const Signin = ({ register, setRegister }) => {
 };
 
 export default Signin;
+
