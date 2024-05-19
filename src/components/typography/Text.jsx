@@ -50,6 +50,30 @@ const textStyles = {
     fontSize: '12px',
     lineHeight: '150%',
   },
+  paragraphBold: {
+    fontFamily: 'Lato',
+    fontStyle: 'bold',
+    fontSize: '14px',
+    lineHeight: '150%',
+  },
+  paragraphMedium: {
+    fontFamily: 'Lato',
+    fontStyle: 'medium',
+    fontSize: '14px',
+    lineHeight: '150%',
+  },
+  paragraphRegular: {
+    fontFamily: 'Lato',
+    fontStyle: 'normal',
+    fontSize: '14px',
+    lineHeight: '150%',
+  },
+  paragraphLight: {
+    fontFamily: 'Lato',
+    fontStyle: 'light',
+    fontSize: '14px',
+    lineHeight: '150%',
+  },
   subtitleBold: {
     fontFamily: 'Lato',
     fontStyle: 'bold',
@@ -94,7 +118,11 @@ Text.propTypes = {
     'subtitleBold',
     'subtitleMedium',
     'smallTextBold',
-  ]).isRequired,
+    'paragraphLight',
+    'paragraphBold',
+    'paragraphMedium',
+    'paragraphRegular',
+  ]),
   children: PropTypes.node.isRequired,
 };
 
