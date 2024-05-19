@@ -50,7 +50,7 @@ const QuizResult = () => {
   //   console.log('QuizResult - selectedOptions:', JSON.stringify(selectedOptions, null, 2));
 
   return (
-    <div className="w-full max-h-screen p-6 overflow-y-auto">
+    <div className="w-full max-h-screen p-6 overflow-y-auto ms-20">
       <div className="w-full p-4 font-semibold text-center rounded-lg bg-primary bg-opacity-10">
         <h1 className="text-3xl text-primary ">Quiz Result</h1>
         <p className="my-4 text-xl">Your Total Score: {score}</p>
@@ -105,3 +105,4 @@ const QuizResult = () => {
 };
 
 export default QuizResult;
+
