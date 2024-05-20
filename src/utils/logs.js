@@ -16,24 +16,25 @@
 
 export const Style = {
   base: [
-    "color: #fff",
-    "background-color: #333",
-    "padding: 2px 4px",
-    "border-radius: 5px",
+    'color: #fff',
+    'background-color: #333',
+    'padding: 2px 4px',
+    'border-radius: 5px',
     "font-family: 'Courier New', Courier, monospace",
   ],
-  warning: ["color: #eee"],
-  success: ["color: #00D800"],
-  danger: ["color: #FF0000"],
-  api: ["background-color: #AD8400", "font-style: bold"],
-  code: ["background-color: #333", "border-left: 3px solid #f0e68c"],
-  effects: ["background-color: #900C3F", "text-shadow: 1px 1px 2px black", "font-weight: bold"],
-  function: ["background-color: #040A58", "font-weight: bold"],
+  warning: ['color: #eee'],
+  success: ['color: #00D800'],
+  danger: ['color: #FF0000'],
+  api: ['background-color: #AD8400', 'font-style: bold'],
+  course: ['background-color: #8569CD', 'font-style: bold'],
+  code: ['background-color: #333', 'border-left: 3px solid #f0e68c'],
+  effects: ['background-color: #900C3F', 'text-shadow: 1px 1px 2px black', 'font-weight: bold'],
+  function: ['background-color: #040A58', 'font-weight: bold'],
 };
 
 export const logs = (text, variables = [], extra = []) => {
-  let style = Style.base.join(";") + ";";
-  style += extra.join(";"); // Add any additional styles
+  let style = Style.base.join(';') + ';';
+  style += extra.join(';'); // Add any additional styles
   if (variables.length > 0) {
     console.log(`%c${text}`, style, ...variables);
   } else {
