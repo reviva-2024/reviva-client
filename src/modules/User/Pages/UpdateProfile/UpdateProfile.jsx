@@ -1,9 +1,10 @@
-import { LucideEdit2, Mail, Phone, User2 } from 'lucide-react';
+import { ArrowLeft, LucideEdit2, Mail, Phone, User2 } from 'lucide-react';
 import React, { useRef, useState } from 'react';
 import { Input } from '../../../../components/input/input';
 import { Button } from '../../../../components';
 import { useAuth } from '../../context/AuthContext';
 import { toast } from 'sonner';
+import { Link } from 'react-router-dom';
 import { profilePictureApi, updateProfileApi } from '../../api/userService';
 import { Style, logs } from '../../../../utils/logs';
 
@@ -38,6 +39,11 @@ const UpdateProfile = () => {
 
   return (
     <section className="w-full font-lato h-full mx-auto flex flex-col justify-center mt-20 items-center max-h-screen overflow-y-auto ms-16">
+      <div className="left-24 top-6 absolute">
+        <Link to={'/auth/profile'}>
+          <ArrowLeft className="text-primary border rounded-md" size="32" />
+        </Link>
+      </div>
       <div className="w-3/4 md:w-1/2 mb-12 lg:mb-0 h-full">
         <form className="mx-auto w-full" onSubmit={handleTextForm}>
           <Input
