@@ -1,4 +1,4 @@
-import { ArrowLeft, LucideEdit2, Pen, LockKeyhole } from 'lucide-react';
+import { LucideEdit2, Pen, LockKeyhole } from 'lucide-react';
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Input } from '../../../../components/input/input';
@@ -7,7 +7,6 @@ import { changePasswordApi, profilePictureApi, sendForgetEmailApi } from '../../
 import { Style, logs } from '../../../../utils/logs';
 import { toast } from 'sonner';
 import { useAuth } from '../../context/AuthContext';
-import { InputPassword } from '../../../../components/input/inputPassword';
 
 const CurrentProfile = () => {
   const [isOTPOpen, setIsOTPOpen] = useState(false);
@@ -71,7 +70,7 @@ const CurrentProfile = () => {
 
   const changePassword = async () => {
     if (newPassword === confirmPassword) {
-      const data = { otp, oldPassword, newPassword };
+      const data = { otp: otp, oldPassword: oldPassword, newPassword: newPassword };
 
       const res = await changePasswordApi(data, token);
       logs('handleSubmit: changePasswordApi res', [res], Style.function);
@@ -88,11 +87,6 @@ const CurrentProfile = () => {
 
   return (
     <section className="w-full max-h-screen overflow-y-auto font-lato h-full mx-auto flex flex-col justify-center mb-10 items-center ms-20">
-      <div className="left-3 top-6 absolute">
-        <Link to={'/'}>
-          <ArrowLeft className="text-primary border rounded-md" size="32" />
-        </Link>
-      </div>
       {/* profile picture upload start */}
       <form>
         <div className="mt-28 mb-5 relative">
@@ -173,7 +167,7 @@ const CurrentProfile = () => {
                 Change Password
               </Text>
 
-              <InputPassword
+              <Input
                 id="oldPassword"
                 type="password"
                 placeholder="Old Password"
@@ -181,7 +175,7 @@ const CurrentProfile = () => {
                   setOldPassword(event.target.value);
                 }}
               />
-              <InputPassword
+              <Input
                 id="newPassword"
                 type="password"
                 placeholder="New Password"
@@ -189,7 +183,7 @@ const CurrentProfile = () => {
                   setNewPassword(event.target.value);
                 }}
               />
-              <InputPassword
+              <Input
                 id="confirmPassword"
                 type="password"
                 placeholder="Confirm Password"
