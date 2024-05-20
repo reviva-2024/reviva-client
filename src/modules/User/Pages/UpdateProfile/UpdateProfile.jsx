@@ -8,11 +8,11 @@ import { profilePictureApi, updateProfileApi } from '../../api/userService';
 import { Style, logs } from '../../../../utils/logs';
 
 const UpdateProfile = () => {
-  const [userName, setUserName] = useState();
-  const [phoneNumber, setPhoneNumber] = useState();
+  const [userName, setUserName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [loading, setLoading] = useState(false);
-
-  const { user } = useAuth();
+  console.log(userName, phoneNumber);
+  const { user, setUser } = useAuth();
   const token = user.token;
   const email = user.data.email;
 
@@ -20,13 +20,15 @@ const UpdateProfile = () => {
     event.preventDefault();
     setLoading(true);
 
-    const data = { userName, phoneNumber };
+    const data = { username: userName, phone: phoneNumber };
+    console.log('data from inside', data);
 
     const res = await updateProfileApi(data, token);
     logs('handleSubmit: updateProfileApi res', [res], Style.function);
 
     if (res.status === 200) {
       setLoading(false);
+      setUser(res.data);
       toast.success(res.data.message);
     } else {
       setLoading(false);

@@ -2,9 +2,11 @@ import { Menu, ArrowLeft } from 'lucide-react';
 import React, { useState } from 'react';
 import { firstUlItems, secondUlItems } from './navLinks';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../modules/User/context/AuthContext';
 
 export default function Sidebar() {
   const [expanded, setExpanded] = useState(false);
+  const { logout } = useAuth();
 
   const toggleExpanded = () => {
     setExpanded((prevExpanded) => !prevExpanded);
@@ -55,6 +57,7 @@ export default function Sidebar() {
               <li
                 key={index}
                 className="relative flex items-center py-3 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors group hover:bg-indigo-50 text-gray-600"
+                onClick={() => logout()}
               >
                 {item.icon}
                 <span

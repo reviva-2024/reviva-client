@@ -18,13 +18,17 @@ const CurrentProfile = () => {
   const [newPassword, setNewPassword] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [updatedPic, setUpdatedPic] = useState(null);
 
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const token = user.token;
   const email = user.data.email;
   const profilePicture = user.data.profilePicture;
+  console.log('profilePicture from auth context', profilePicture);
   const username = user.data.username;
   const phone = user.data.phone;
+
+  console.log('UseAuth:', useAuth());
 
   const fileInputRef = useRef(null);
   const handleEditClick = () => {
@@ -33,6 +37,7 @@ const CurrentProfile = () => {
 
   const handleFileInputChange = async (event) => {
     const file = event.target.files[0];
+    setUpdatedPic(URL.createObjectURL(file));
     if (!file) return;
 
     const formData = new FormData();
@@ -42,6 +47,7 @@ const CurrentProfile = () => {
     logs('handleSubmit: profilePictureApi res', [res], Style.function);
 
     if (res.status === 200) {
+      setUser(res.data);
       toast.success(res.data.message);
     } else {
       setLoading(false);
@@ -91,7 +97,7 @@ const CurrentProfile = () => {
       <form>
         <div className="mt-28 mb-5 relative">
           <img
-            src={profilePicture || 'https://placehold.co/278x278'}
+            src={!updatedPic ? profilePicture : updatedPic || 'https://placehold.co/278x278'}
             alt="Profile Picture"
             className="md:w-[278px] md:h-[278px] w-[200px] h-[200px] rounded-md object-fit"
           />
@@ -137,7 +143,7 @@ const CurrentProfile = () => {
           {/* Main Dialog */}
           <CustomDialog
             triggerText="Change Password"
-            triggerTextVariant={'link'}
+            triggerTextVariant={'outline'}
             triggerTextStyle={'text-primary'}
             handleOnSubmit={handleSendOTP}
             isOpen={isMainModalOpen}
