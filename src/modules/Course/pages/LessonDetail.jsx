@@ -7,7 +7,7 @@ const LessonDetail = () => {
   const [currentLesson, setCurrentLesson] = useState(lessonDetail.currentLesson);
   const restLessons = lessons.filter((lesson) => lesson.videoLink != currentLesson.videoLink);
   return (
-    <section className="w-full p-4">
+    <section className="w-full p-4 h-full">
       <h1 className="text-xl text-white bg-primary p-3 mb-3 rounded-md font-semibold">
         Lesson {currentLesson.lessonNo} : {currentLesson.title}
       </h1>
