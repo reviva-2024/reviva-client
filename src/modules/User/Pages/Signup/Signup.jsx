@@ -54,7 +54,7 @@ const Signup = ({ register, setRegister }) => {
         </div>
         <div className="w-full lg:w-1/2 flex flex-col justify-center items-center mb-12 lg:mb-0 rounded-e-[45px] lg:shadow-2xl h-full">
           <form onSubmit={handleSubmit} className="w-4/5 mx-auto lg:w-3/5 ">
-            <Text variant="h4" className="text-primary mb-9">
+            <Text variant="h2" className="text-primary mb-9">
               Sign Up
             </Text>
             <Input
@@ -114,3 +114,4 @@ const Signup = ({ register, setRegister }) => {
 };
 
 export default Signup;
+

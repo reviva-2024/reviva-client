@@ -101,7 +101,7 @@ const Signin = ({ register, setRegister }) => {
             onSubmit={handleSubmit}
             className="flex flex-col justify-center w-4/5 h-full mx-auto lg:w-3/5"
           >
-            <Text variant="h4" className="text-primary mb-9">
+            <Text variant="h2" className="text-primary mb-9">
               Sign In
             </Text>
             <Input
