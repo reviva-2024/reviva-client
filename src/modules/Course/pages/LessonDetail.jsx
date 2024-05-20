@@ -1,14 +1,21 @@
+import { Undo2 } from 'lucide-react';
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const LessonDetail = () => {
   const { state: lessonDetail } = useLocation();
   const { lessons, courseTitle } = lessonDetail;
   const [currentLesson, setCurrentLesson] = useState(lessonDetail.currentLesson);
   const restLessons = lessons.filter((lesson) => lesson.videoLink != currentLesson.videoLink);
+  const goToPreviousPage = () => {
+    window.history.go(-1);
+  };
   return (
     <section className="w-full p-4 h-full">
-      <h1 className="text-xl text-white bg-primary p-3 mb-3 rounded-md font-semibold">
+      <h1 className="text-xl flex gap-3 items-center text-white bg-primary p-3 mb-3 rounded-md font-semibold">
+        <button className="bg-neutral-50/10 px-2" onClick={goToPreviousPage} to={'/courseLesson'}>
+          <Undo2 />{' '}
+        </button>{' '}
         Lesson {currentLesson.lessonNo} : {currentLesson.title}
       </h1>
       <div className="w-full rounded-md">
