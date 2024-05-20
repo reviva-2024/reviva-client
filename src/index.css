@@ -14,3 +14,24 @@
   height: 100%;
   border: 0;
 }
+/* Hide the scrollbar for better visibility */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 10px; /* For horizontal scrollbar */
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #8569cd;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #8569cd;
+}
