@@ -1,9 +1,11 @@
 import { Undo2 } from 'lucide-react';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import ScrollToTop from '../../../hooks/useScroollToTop';
 
 const CourseLesson = () => {
   const { state: course } = useLocation();
+  ScrollToTop();
   const goToPreviousPage = () => {
     window.history.go(-1);
   };
