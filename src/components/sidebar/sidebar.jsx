@@ -24,7 +24,7 @@ export default function Sidebar() {
           {!expanded ? (
             <Menu />
           ) : (
-            <ArrowLeft className="border border-neutral-400 rounded text-primary" />
+            <ArrowLeft className="border border-primary rounded text-primary" />
           )}
         </button>
       </div>
