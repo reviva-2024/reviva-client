@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { act, useEffect, useRef, useState } from 'react';
 import Question from '../components/Question';
-import { getAllQuizesApi, updateQuizeMarkApi } from '../api/quizApi';
+import { getAllBengaliQuizesApi, getAllQuizesApi, updateQuizeMarkApi } from '../api/quizApi';
 import { toast } from 'sonner';
 import { useAuth } from '../../User/context/AuthContext';
 import { Style, logs } from '../../../utils/logs';
@@ -8,17 +8,24 @@ import QuestionSkeleton from '../components/QuestionSkeleton';
 import { Button } from '../../../components/buttons/button';
 import { useNavigate } from 'react-router-dom';
 import { useScrollToTop } from '../../../hooks/useScrollToTop';
+import ToggleBtn from '../../../components/buttons/toggleBtn';
 
 const Quiz = () => {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedOptions, setSelectedOptions] = useState(new Array(questions.length).fill(''));
   const [currentPage, setCurrentPage] = useState(0);
+  const [activeLanguage, setActiveLanguage] = useState('en');
   const navigate = useNavigate();
   const { user } = useAuth();
   const quizRef = useRef(null);
+  const labels = ['en', 'bn']; // for toggle buttons
 
   const questionsPerPage = 5;
+
+  const handleToggle = () => {
+    setActiveLanguage(activeLanguage === 'en' ? 'bn' : 'en');
+  };
 
   const handleOptionSelect = (index, option) => {
     const newSelectedOptions = [...selectedOptions];
@@ -81,8 +88,6 @@ const Quiz = () => {
     const storedCurrentPage = localStorage.getItem('currentPage');
 
     if (storedSelectedOptions && storedCurrentPage) {
-      console.log('storedSelectedOptions', storedSelectedOptions);
-      console.log('storedCurrentPage', storedCurrentPage);
       setSelectedOptions(JSON.parse(storedSelectedOptions));
       setCurrentPage(parseInt(storedCurrentPage));
       setLoading(false);
@@ -103,8 +108,14 @@ const Quiz = () => {
     setLoading(true);
 
     const fetchQuizes = async () => {
-      const response = await getAllQuizesApi(user.token);
-      logs('getAllQuizes useEffect:', [response], Style.effects);
+      let response;
+      if (activeLanguage === 'en') {
+        response = await getAllQuizesApi(user.token);
+      } else {
+        response = await getAllBengaliQuizesApi(user.token);
+      }
+
+      // logs('getAllQuizes useEffect:', [response], Style.effects);
 
       if (response.data.success) {
         setQuestions(response.data.data);
@@ -116,10 +127,18 @@ const Quiz = () => {
       }
     };
     fetchQuizes();
-  }, [user.token]);
+  }, [user.token, activeLanguage]);
 
   return (
     <div className="grid w-full max-h-screen gap-5 p-5 overflow-y-auto ms-20" ref={quizRef}>
+      <div className="flex justify-end w-full">
+        <ToggleBtn
+          isChecked={activeLanguage === 'bn'}
+          onToggle={handleToggle}
+          labels={labels}
+          loading={loading}
+        />
+      </div>
       {loading
         ? Array.from({ length: 5 }).map((_, idx) => <QuestionSkeleton key={idx} />)
         : currentQuestions.map(({ _id, question, options }, index) => (
@@ -137,7 +156,7 @@ const Quiz = () => {
         <Button
           onClick={handleNextPage}
           disabled={!isCurrentPageAnswered()}
-          className="w-full max-w-36"
+          className="w-full max-w-36 "
         >
           {currentPage === Math.ceil(questions.length / questionsPerPage) - 1 ? 'Submit' : 'Next'}
         </Button>
