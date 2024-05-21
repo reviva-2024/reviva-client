@@ -90,10 +90,17 @@ const Quiz = () => {
     if (storedSelectedOptions && storedCurrentPage) {
       setSelectedOptions(JSON.parse(storedSelectedOptions));
       setCurrentPage(parseInt(storedCurrentPage));
+
+      console.log('stored options: ' + JSON.stringify(storedSelectedOptions));
       setLoading(false);
     }
+
+    console.log('selected options: ', selectedOptions);
+
     setLoading(false);
   }, []);
+
+  // useEffect(() => {}, []);
 
   // Update local storage when selected options or current page change
   useEffect(() => {
@@ -119,7 +126,6 @@ const Quiz = () => {
 
       if (response.data.success) {
         setQuestions(response.data.data);
-        setSelectedOptions(new Array(response.data.data.length).fill(''));
         setLoading(false);
       } else {
         setLoading(false);
