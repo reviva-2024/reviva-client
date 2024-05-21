@@ -7,6 +7,8 @@ import Quiz from '../modules/Quiz/pages/Quiz';
 import Home from '../pages/Home';
 import HomeMain from '../pages/Home/HomeMain';
 import QuizResult from '../modules/Quiz/pages/QuizResult';
+import CourseLesson from '../modules/Course/pages/CourseLesson';
+import LessonDetail from '../modules/Course/pages/LessonDetail';
 import CurrentProfile from '../modules/User/Pages/UpdateProfile/CurrentProfile';
 
 const Routers = () => {
@@ -21,6 +23,8 @@ const Routers = () => {
         <Route exact path="auth/profile" element={<CurrentProfile />} />
         <Route exact path="quiz" element={<Quiz />} />
         <Route exact path="quiz-result" element={<QuizResult />} />
+        <Route exact path="courseLesson" element={<CourseLesson />} />
+        <Route exact path="lessonDetail" element={<LessonDetail />} />
       </Route>
     </Routes>
   );

@@ -11,10 +11,10 @@ export const firstUlItems = [
     name: 'Quiz',
     route: '/quiz',
   },
-  {
-    icon: <ListVideo size={22} />,
-    name: 'Courses',
-  },
+  // {
+  //   icon: <ListVideo size={22} />,
+  //   name: 'Courses',
+  // },
 ];
 
 export const secondUlItems = [
