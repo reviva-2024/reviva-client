@@ -27,10 +27,10 @@ export const Button = React.forwardRef(
           {
             'bg-primary text-white hover:bg-primary/90': variant === 'default',
             'bg-red-500 text-white hover:bg-red-500/90': variant === 'destructive',
-            'border border-secondary bg-background text-secondary hover:bg-secondary hover:text-white':
+            'border border-primary text-primary hover:bg-primary hover:text-white':
               variant === 'outline',
             'bg-accent text-white hover:bg-accent/80': variant === 'primary',
-            'text-accent hover:bg-accent hover:text-white': variant === 'ghost',
+            'text-accent hover:bg-accent hover:text-white': variant === 'secondary',
             'text-primary underline-offset-4 hover:underline': variant === 'link',
           },
           {

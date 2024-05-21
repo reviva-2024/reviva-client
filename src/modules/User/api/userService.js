@@ -1,5 +1,5 @@
 
-import { noAuthURL } from "../../../api/intances";
+import { authFileURL, authURL, noAuthURL } from "../../../api/intances";
 import { Style, logs } from "../../../utils/logs";
 import { trycatch } from "../../../utils/trycatch";
 
@@ -67,4 +67,53 @@ export const verifyOtpAndForgotPasswordApi = async (data) => {
   logs("Success: verifyOtpAndForgotPasswordApi", [verifyOtpAndForgotPasswordRes], Style.success);
 
   return verifyOtpAndForgotPasswordRes;
+};
+
+
+export const updateProfileApi = async (data, token) => {
+  logs("API Call: updateProfileApi", [], Style.api);  
+  logs("Data: updateProfileApi", [data], Style.code);
+  
+  const [updateProfileRes, updateProfileErr] = await trycatch(authURL(token).put("/user/updateUserInfo", data));
+
+  if (updateProfileErr) {
+    logs("Error: updateProfileApi", [updateProfileErr.response], Style.danger);
+    return updateProfileErr.response;
+  }
+
+  logs("Success: updateProfileApi", [updateProfileRes], Style.success);
+
+  return updateProfileRes;
+};
+
+export const changePasswordApi = async (data, token) => {
+  logs("API Call: changePasswordApi", [], Style.api);
+  logs("Data: changePasswordApi", [data], Style.code);
+
+  const [changePasswordRes, changePasswordErr] = await trycatch(authURL(token).put("/user/verifyOtpAndUpdate", data));
+
+  if (changePasswordErr) {
+    logs("Error: changePasswordApi", [changePasswordErr.response], Style.danger);
+    return changePasswordErr.response;
+  }
+
+  logs("Success: changePasswordApi", [changePasswordRes], Style.success);
+
+  return changePasswordRes;
+};
+
+export const profilePictureApi = async (data, token) => {
+  logs("API Call: profilePictureApi", [], Style.api);
+  logs("Data: profilePictureApi", [data], Style.code);
+  
+  const [profilePictureRes, profilePictureErr] = await trycatch(authFileURL(token).put("/user/updateProfilePicture", data));
+
+  if (profilePictureErr) {
+    logs("Error: profilePictureApi", [profilePictureErr.response], Style.danger);
+    return profilePictureErr.response;
+  }
+
+  logs("Success: profilePictureApi", [profilePictureRes], Style.success);
+
+  return profilePictureRes;
 };

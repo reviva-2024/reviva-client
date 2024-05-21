@@ -4,7 +4,7 @@ import CourseSection from './components/CourseSection';
 
 const HomeMain = () => {
   return (
-    <div className="w-full h-screen p-6 overflow-y-scroll">
+    <div className="w-full h-screen p-6 overflow-y-scroll ms-20">
       <QuizSection />
       <CourseSection />
     </div>
@@ -12,3 +12,4 @@ const HomeMain = () => {
 };
 
 export default HomeMain;
+
