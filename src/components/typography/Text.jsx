@@ -1,100 +1,46 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { cn } from '../../utils/cn';
 
-const textStyles = {
-  h1: {
-    fontFamily: 'Raleway',
-    fontStyle: 'bold',
-    fontSize: '72px',
-    lineHeight: '120%',
-  },
-  h2: {
-    fontFamily: 'Raleway',
-    fontStyle: 'bold',
-    fontSize: '64px',
-    lineHeight: '120%',
-  },
-  h3: {
-    fontFamily: 'Raleway',
-    fontStyle: 'bold',
-    fontSize: '48px',
-    lineHeight: '140%',
-  },
-  h4: {
-    fontFamily: 'Raleway',
-    fontStyle: 'bold',
-    fontSize: '32px',
-    lineHeight: '140%',
-  },
-  h5: {
-    fontFamily: 'Raleway',
-    fontStyle: 'medium',
-    fontSize: '32px',
-    lineHeight: '140%',
-  },
-  bodyBold: {
-    fontFamily: 'Lato',
-    fontStyle: 'bold',
-    fontSize: '12px',
-    lineHeight: '150%',
-  },
-  bodyMedium: {
-    fontFamily: 'Lato',
-    fontStyle: 'medium',
-    fontSize: '12px',
-    lineHeight: '150%',
-  },
-  bodyRegular: {
-    fontFamily: 'Lato',
-    fontStyle: 'normal',
-    fontSize: '12px',
-    lineHeight: '150%',
-  },
-  subtitleBold: {
-    fontFamily: 'Lato',
-    fontStyle: 'bold',
-    fontSize: '24px',
-    lineHeight: '100%',
-  },
-  subtitleMedium: {
-    fontFamily: 'Lato',
-    fontStyle: 'medium',
-    fontSize: '24px',
-    lineHeight: '150%',
-  },
-  smallTextBold: {
-    fontFamily: 'Lato',
-    fontStyle: 'bold',
-    fontSize: '11px',
-    lineHeight: '150%',
-  },
-};
+export const Text = ({ variant, type, children, className }) => {
+  // Define a mapping of variants to HTML elements
+  const variantsElement = {
+    h1: 'h1',
+    h2: 'h2',
+    h3: 'h3',
+    h4: 'h4',
+    h5: 'h5',
+    h6: 'h6',
+    body: 'p',
+    sub: 'sub',
+  };
 
-export const Text = ({ variant, children, className }) => {
-  const style = textStyles[variant] || {};
-  const classNames = className ? `${className}` : '';
+  const variantsStyle = {
+    h1: 'text-4xl',
+    h2: 'text-3xl',
+    h3: 'text-2xl',
+    h4: 'text-xl',
+    h5: 'text-lg',
+    h6: 'text-base',
+    body: 'text-base',
+    sub: 'text-sm',
+  };
+
+  // Define a mapping of styles to CSS classes
+  const stylesMap = {
+    bold: 'font-semibold',
+    normal: 'font-normal',
+    thin: 'font-thin',
+  };
+
+  // Determine the HTML element and style based on the variant prop
+  const Element = variantsElement[variant] || 'p';
+  const textStyle = stylesMap[type] || 'font-normal';
+  const style = variantsStyle[variant] || 'text-base';
 
   return (
-    <span className={classNames} style={style}>
+    <Element className={cn(` ${textStyle} ${style} font-montserrat`, className)}>
       {children}
-    </span>
+    </Element>
   );
-};
-
-Text.propTypes = {
-  variant: PropTypes.oneOf([
-    'h1',
-    'h2',
-    'h3',
-    'h4',
-    'h5',
-    'bodyBold',
-    'bodyMedium',
-    'bodyRegular',
-    'subtitleBold',
-    'subtitleMedium',
-    'smallTextBold',
-  ]).isRequired,
-  children: PropTypes.node.isRequired,
 };
 

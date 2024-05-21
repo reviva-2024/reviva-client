@@ -116,7 +116,7 @@ const Quiz = () => {
   }, [user.token]);
 
   return (
-    <div className="grid w-full max-h-screen gap-5 p-5 overflow-y-auto">
+    <div className="grid w-full max-h-screen gap-5 p-5 ms-20 overflow-y-auto">
       {loading
         ? Array.from({ length: 5 }).map((_, idx) => <QuestionSkeleton key={idx} />)
         : currentQuestions.map(({ _id, question, options }, index) => (
@@ -144,3 +144,4 @@ const Quiz = () => {
 };
 
 export default Quiz;
+
