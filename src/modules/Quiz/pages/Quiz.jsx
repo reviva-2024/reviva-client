@@ -7,6 +7,7 @@ import { Style, logs } from '../../../utils/logs';
 import QuestionSkeleton from '../components/QuestionSkeleton';
 import { Button } from '../../../components/buttons/button';
 import { useNavigate } from 'react-router-dom';
+import { useScrollToTop } from '../../../hooks/useScrollToTop';
 
 const Quiz = () => {
   const [questions, setQuestions] = useState([]);
@@ -15,6 +16,7 @@ const Quiz = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const navigate = useNavigate();
   const { user } = useAuth();
+  const quizRef = useRef(null);
 
   const questionsPerPage = 5;
 
@@ -61,6 +63,7 @@ const Quiz = () => {
       localStorage.removeItem('currentPage');
     } else {
       setCurrentPage((prev) => prev + 1);
+      useScrollToTop(quizRef);
     }
   };
 
@@ -116,7 +119,7 @@ const Quiz = () => {
   }, [user.token]);
 
   return (
-    <div className="grid w-full max-h-screen gap-5 p-5 ms-20 overflow-y-auto">
+    <div className="grid w-full max-h-screen gap-5 p-5 overflow-y-auto ms-20" ref={quizRef}>
       {loading
         ? Array.from({ length: 5 }).map((_, idx) => <QuestionSkeleton key={idx} />)
         : currentQuestions.map(({ _id, question, options }, index) => (
@@ -144,4 +147,3 @@ const Quiz = () => {
 };
 
 export default Quiz;
-
