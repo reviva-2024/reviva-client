@@ -10,7 +10,7 @@ const CourseLesson = () => {
     window.history.go(-1);
   };
   return (
-    <section className="w-full p-4">
+    <section className="w-full p-4 ms-20">
       <h1 className="text-xl flex gap-3 items-center text-white bg-primary p-3 mb-3 rounded-md font-semibold">
         <button className="bg-neutral-50/10 px-2" onClick={goToPreviousPage} to={'/courseLesson'}>
           <Undo2 />{' '}
