@@ -62,6 +62,7 @@ const Quiz = () => {
           score: calculateScore(),
           questions: questions,
           selectedOptions: selectedOptions,
+          activeLanguage: activeLanguage,
         },
       });
 

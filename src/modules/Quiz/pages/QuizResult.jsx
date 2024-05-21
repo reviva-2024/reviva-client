@@ -3,26 +3,35 @@ import { useLocation } from 'react-router-dom';
 
 const QuizResult = () => {
   const location = useLocation();
-  const { score, questions, selectedOptions } = location.state || {
+  const { score, questions, selectedOptions, activeLanguage } = location.state || {
     score: 0,
     questions: [],
     selectedOptions: [],
+    activeLanguage: 'en',
   };
 
   let employabilityMessage;
 
   if (score >= 61 && score <= 80) {
-    employabilityMessage = <span className="text-green-500">High Employability.</span>;
+    employabilityMessage = (
+      <span className="text-green-500">
+        {activeLanguage === 'en' ? 'High Employability.' : 'উচ্চ নিয়োগযোগ্যতা।'}
+      </span>
+    );
   } else if (score >= 41 && score <= 60) {
     employabilityMessage = (
       <span className="text-yellow-500">
-        Medium employability. Need to focus on gaining and honing skills.
+        {activeLanguage === 'en'
+          ? ' Medium employability. Need to focus on gaining and honing skills.'
+          : 'মাঝারি নিয়োগযোগ্যতা। দক্ষতা অর্জন এবং প্র‍্যাক্টিসের উপর ফোকাস করা দরকার।'}
       </span>
     );
   } else if (score >= 20 && score <= 40) {
     employabilityMessage = (
       <span className="text-red-500">
-        Below average. Focus on your career. Gain related skills.
+        {activeLanguage === 'en'
+          ? 'Below average. Focus on your career. Gain related skills.'
+          : 'গড়ের নিচে। আপনার ক্যারিয়ারে মনোযোগ দিন। জরুরি দক্ষতা অর্জন করুন।'}
       </span>
     );
   } else {
@@ -105,4 +114,3 @@ const QuizResult = () => {
 };
 
 export default QuizResult;
-
