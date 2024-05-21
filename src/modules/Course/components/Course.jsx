@@ -54,7 +54,7 @@ const Courses = () => {
   return (
     <div>
       {courses?.map((course, index) => (
-        <div className="border-2 border-neutral-200 rounded-xl h-60 mt-4" key={index}>
+        <div className="border-2  border-neutral-200 rounded-xl h-60 mt-4" key={index}>
           {CourseDetail(course)}
         </div>
       ))}

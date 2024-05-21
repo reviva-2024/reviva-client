@@ -17,7 +17,7 @@ const CourseLesson = () => {
   }, []);
 
   return (
-    <section className="w-full p-4" ref={courseRef}>
+    <section className="w-full p-4 ms-20" ref={courseRef}>
       <h1 className="flex items-center gap-3 p-3 mb-3 text-xl font-semibold text-white rounded-md bg-primary">
         <button className="px-2 bg-neutral-50/10" onClick={goToPreviousPage} to={'/courseLesson'}>
           <Undo2 />{' '}
