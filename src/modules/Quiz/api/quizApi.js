@@ -19,6 +19,24 @@ export const getAllQuizesApi = async (token) => {
 };
 
 
+export const getAllBengaliQuizesApi = async (token) => {
+    
+  logs("API Call: getAllBengaliQuizesApi", [], Style.api);
+
+  const [getAllBengaliQuizesRes, getAllBengaliQuizesErr] = await trycatch(authURL(token).get("/quiz/getBanglaQuizes"));
+
+  if (getAllBengaliQuizesErr) {
+    logs("Error: getAllBengaliQuizesApi", [getAllBengaliQuizesErr.response], Style.danger);
+    return getAllBengaliQuizesErr.response;
+  }
+
+  logs("Success: getAllBengaliQuizesApi", [getAllBengaliQuizesRes], Style.success);
+
+  return getAllBengaliQuizesRes;
+};
+
+
+
 export const updateQuizeMarkApi = async (token) => {
     
   logs("API Call: updateQuizeMarkApi", [], Style.api);
